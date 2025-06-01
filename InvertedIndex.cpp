@@ -1,9 +1,9 @@
-#include "InvertedIndex.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <stdexcept>
-#include "json.hpp"
+#include "external/nlohmann/json.hpp"
+#include "InvertedIndex.h"
 
 using json = nlohmann::json;
 
@@ -13,7 +13,6 @@ std::vector<std::string> InvertedIndex::tokenize(const std::string& text) {
     std::vector<std::string> tokens;
     while (stream >> word) {
         word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
-        
         std::transform(word.begin(), word.end(), word.begin(), ::tolower);
         tokens.push_back(word);
     }
@@ -101,6 +100,7 @@ std::pair<std::string, std::string> InvertedIndex::findBestMatch(const std::stri
     }
 
     if (!bestMatch.empty()) {
+        
         return { bestMatch, qaMap[bestMatch] };
     } else {
         return { "", "No match found." };
