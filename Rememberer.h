@@ -9,9 +9,12 @@
 #include <cmath>
 #include <map>
 #include <algorithm>
+#include "InvertedIndex.h"
 
 class Rememberer {
 public:
+
+  InvertedIndex invertedIndex;
 
   void introduction();
 
@@ -32,7 +35,8 @@ public:
   // This variable stores the name of our robot.  
   // Changing this will change the robot's name globally.
   std::string bot_name = "Memory Bot";
-
+  
+  std::string bot_name_upper = upper(bot_name);
 
 private:
   std::string response;
@@ -50,7 +54,7 @@ private:
   // This variable stores the name of our robot's brain file.  
   // Changing this will change the name of the brain file 
   // searched for by the system.
-  std::string memory_file_name = "brain.txt";
+  std::string memory_file_name = "brain.json";
 
 };
 

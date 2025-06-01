@@ -9,6 +9,7 @@
 #include <map>
 #include <algorithm>
 #include "Rememberer.h"
+#include "InvertedIndex.h"
 
 // This function breaks the ice between MemoryBot and the user.  
 // The values for the user_name and user_name_upper are 
@@ -31,60 +32,42 @@ void Rememberer::introduction() {
   std::cout << "\n" + bot_name_upper +   ": Hello " + first_name + ", how can I be of service? \n\n" + first_name_upper + ": ";
 }
 
-
-
 void Rememberer::conversation() {
-  std::string question;
+  InvertedIndex index;
+  std::string current_question;
   std::string answer;
   bool question_found = false;
+
+  index.loadFromJson(memory_file_name);
   
-  while (a_is_in_b("goodbye", question) != true) {
+  while (a_is_in_b("goodbye", current_question) != true) {
     
-    std::cin >> question;
+    std::cin >> current_question;
 
     // If the word "goodbye" is in user input,
-    if (a_is_in_b("goodbye", question) == true) {
+    if (a_is_in_b("goodbye", current_question) == true) {
       // Say goodbye to the user and terminate the program.
       std::cout << "\n\nIt has been a pleasure, I hope that I have been of service. Goodbye for now." << std::endl;
       return;
-      
+
       // Otherwise,
     } else {
+
       // turn the question to lowercase to facilitate comparison,
-      question = lower(question);
+      current_question = lower(current_question);
 
-      // use the Rememberer class's readlines() function to create a vector
-      // where each line of the txt file is an index,
-      std::vector<std::string> q_and_a_vector = readlines(memory_file_name);
-      
-      // Check each element in the vector to see if the user's question is in any of them.
-      for (size_t i = 0; i < q_and_a_vector.size(); ++i) {
-        if (a_is_in_b(question, q_and_a_vector[i]) == true) {
-           std::cout << "\n\n" + upper(bot_name) + ": " + q_and_a_vector[i + 1] << std::endl << std::endl << first_name_upper + ": ";
-           question_found = true;
-           break;
-        }
-      }
+      /////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
 
-      if (!question_found) {
-        std::cout << upper(bot_name) + ": I'm sorry, I can't recall the answer to that question.  Please provide the answer and I'll make sure not to forget it, or say 'skip' to skip that question and ask a different question." << std::endl << std::endl << first_name_upper + ": ";
-        std::cin >> answer;
-        
-        if (a_is_in_b("skip", answer) == true) {
-/////////////////////////////////////////////////////////////////////
-//////////////// FIXME: Somethign within a few lines of this coment is dokubling name sin the output.
-/////////////////////////////////////////////////////////////////////
-          std::cout << upper(bot_name) + ": The question has been skipped, no answer was saved for that question.";
-          break;
-        }
-        else {
-          writeStringToFile(question, memory_file_name);
-          writeStringToFile(answer, memory_file_name);
-          break;
-        }
-      }
+      auto [question, answer] = index.findBestMatch(current_question);
+
+      std::cout << "\n" + bot_name_upper + ": " + answer << std::endl << std::endl << first_name_upper + ": ";
     }
   } 
+
+  index.saveToJson(memory_file_name);
+
 }
 
 
