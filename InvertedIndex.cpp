@@ -7,18 +7,27 @@
 
 using json = nlohmann::json;
 
+// This function breaks each string down into individual words (or tokens).
 std::vector<std::string> InvertedIndex::tokenize(const std::string& text) {
+    // This instream object will process usr input strings.
     std::istringstream stream(text);
     std::string word;
+    // This vector will hold each word (or token) at its own index. 
     std::vector<std::string> tokens;
+    // For each word in the stream, 
     while (stream >> word) {
+        // remove punctution (non-letter characters) from input,
         word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
+        // make all characters lowercase,
         std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+        // and add the token to the tokens vector.
         tokens.push_back(word);
     }
+    // Return a vector of words (tokens) which make up the processed input string.
     return tokens;
 }
 
+// This function indexxes a new question to the inverted index.
 void InvertedIndex::indexQuestion(const std::string& question) {
     for (const auto& word : tokenize(question)) {
         invertedIndex[word].insert(question);
@@ -26,16 +35,22 @@ void InvertedIndex::indexQuestion(const std::string& question) {
 }
 
 void InvertedIndex::removeQuestionFromIndex(const std::string& question) {
+    // For each word (token) in each entry, 
     for (const auto& word : tokenize(question)) {
+        // search for a word in common with the question and the answer (*)
         if (invertedIndex[word].count(question)) {
+            // if one is not found, then get rid of the question. (*)
             invertedIndex[word].erase(question);
+            // If there is no instance of the word in the invrerted index,
             if (invertedIndex[word].empty()) {
+                // then get rid of the word. (*)
                 invertedIndex.erase(word);
             }
         }
     }
 }
 
+// 
 void InvertedIndex::loadFromJson(const std::string& filename) {
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
