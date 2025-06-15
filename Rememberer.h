@@ -36,7 +36,7 @@ public:
   // Changing this will change the robot's name globally.
   std::string bot_name = "Memory Bot";
   
-  std::string bot_name_upper = upper(bot_name);
+  std::string bot_name_all_caps = upper(bot_name);
 
 private:
   std::string response;

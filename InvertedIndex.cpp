@@ -27,7 +27,7 @@ std::vector<std::string> InvertedIndex::tokenize(const std::string& text) {
     return tokens;
 }
 
-// This function indexxes a new question to the inverted index.
+// This function indexes a new question to the inverted index.
 void InvertedIndex::indexQuestion(const std::string& question) {
     for (const auto& word : tokenize(question)) {
         invertedIndex[word].insert(question);
@@ -50,13 +50,14 @@ void InvertedIndex::removeQuestionFromIndex(const std::string& question) {
     }
 }
 
-// 
+// This function loads data into the inverted index from a JSON file.
 void InvertedIndex::loadFromJson(const std::string& filename) {
     std::ifstream inFile(filename);
+    // If the file is not opened succesfully,
     if (!inFile.is_open()) {
+        // then throw an error.
         throw std::runtime_error("Could not open file for reading.");
     }
-
     json j;
     inFile >> j;
     for (auto& [q, a] : j.items()) {
@@ -67,6 +68,8 @@ void InvertedIndex::loadFromJson(const std::string& filename) {
     }
 }
 
+// This function saves all information in the question/answer 
+// unordered map into our JSON file.
 void InvertedIndex::saveToJson(const std::string& filename) {
     json j;
     for (const auto& [q, a] : qaMap) {
@@ -81,6 +84,7 @@ void InvertedIndex::saveToJson(const std::string& filename) {
     outFile << j.dump(4);
 }
 
+// This function adds a question-answer (key-value) pair to our inverted index.
 void InvertedIndex::addEntry(const std::string& question, const std::string& answer) {
     if (qaMap.find(question) == qaMap.end()) {
         qaMap[question] = answer;
@@ -88,6 +92,7 @@ void InvertedIndex::addEntry(const std::string& question, const std::string& ans
     }
 }
 
+// This function removes a question-answer (key-value) pair to our inverted index.
 void InvertedIndex::removeEntry(const std::string& question) {
     if (qaMap.find(question) != qaMap.end()) {
         qaMap.erase(question);
@@ -95,29 +100,44 @@ void InvertedIndex::removeEntry(const std::string& question) {
     }
 }
 
-std::pair<std::string, std::string> InvertedIndex::findBestMatch(const std::string& inputQuestion) {
-    std::unordered_map<std::string, int> matchCount;
-    for (const auto& word : tokenize(inputQuestion)) {
-        if (invertedIndex.count(word)) {
-            for (const auto& q : invertedIndex[word]) {
-                matchCount[q]++;
+int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b) {
+        int i = 0, j = 0, count = 0;
+        while (i < a.size() && j < b.size()) {
+            if (a[i] == b[j]) {
+                ++count;
+                ++i;
+                ++j;
+            } else if (a[i] < b[j]) {
+                ++i;
+            } else {
+                ++j;
             }
         }
+        return count;
     }
 
+// This is the function that searches our inverted index for the question string 
+// that has the most tokens (words) in common with the input. 
+std::string InvertedIndex::findBestMatch(const std::string& inputQuestion) {
+    auto inputTokens = tokenize(inputQuestion);
+    std::sort(inputTokens.begin(), inputTokens.end());
+
     std::string bestMatch;
-    int maxMatches = 0;
-    for (const auto& [q, count] : matchCount) {
-        if (count > maxMatches) {
-            maxMatches = count;
-            bestMatch = q;
+    int bestScore = 0;
+
+    for (const auto& [question, answer] : qaMap) {
+        auto questionTokens = tokenize(question);
+        std::sort(questionTokens.begin(), questionTokens.end());
+        int score = linearMergeCount(inputTokens, questionTokens);
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = question;
         }
     }
 
     if (!bestMatch.empty()) {
-        
-        return { bestMatch, qaMap[bestMatch] };
+        return qaMap.at(bestMatch);
     } else {
-        return { "", "No match found." };
+        return "Sorry, I don't know the answer to that.";
     }
 }

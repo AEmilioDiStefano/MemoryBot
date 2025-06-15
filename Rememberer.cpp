@@ -27,9 +27,9 @@ void Rememberer::introduction() {
   std::vector<std::string> name_vector = split(user_name);
   Rememberer::first_name = name_vector[0];
   
-  std::string bot_name_upper = upper(bot_name);
+  std::string bot_name_all_caps = upper(bot_name);
   first_name_upper = upper(first_name);
-  std::cout << "\n" + bot_name_upper +   ": Hello " + first_name + ", how can I be of service? \n\n" + first_name_upper + ": ";
+  std::cout << "\n" + bot_name_all_caps +   ": Hello " + first_name + ", how can I be of service? \n\n" + first_name_upper + ": ";
 }
 
 void Rememberer::conversation() {
@@ -40,10 +40,9 @@ void Rememberer::conversation() {
 
   index.loadFromJson(memory_file_name);
   
-  while (a_is_in_b("goodbye", current_question) != true) {
-    
-    std::cin >> current_question;
+  std::cin >> current_question;
 
+  while (true) {
     // If the word "goodbye" is in user input,
     if (a_is_in_b("goodbye", current_question) == true) {
       // Say goodbye to the user and terminate the program.
@@ -53,26 +52,33 @@ void Rememberer::conversation() {
       // Otherwise,
     } else {
 
-      // turn the question to lowercase to facilitate comparison,
-      current_question = lower(current_question);
+      std::string current_question;
+      std::getline(std::cin, current_question);
+      std::string answer = index.findBestMatch(current_question);
+
+      std::cout << "\n" + bot_name_all_caps + ": " + answer << std::endl << std::endl << first_name_upper + ": ";
 
       /////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////
-
-      auto [question, answer] = index.findBestMatch(current_question);
-
-      std::cout << "\n" + bot_name_upper + ": " + answer << std::endl << std::endl << first_name_upper + ": ";
-
-      /////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////
-
     }
-  } 
+
+  }
 
   index.saveToJson(memory_file_name);
 
+}
+
+// This function acts identically to the word 'in' in Python.  It checks
+// if a string contains a substring, or if string_a is in string_b.
+bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) {
+  size_t found = string_b.find(string_a);
+
+  if (found != std::string::npos) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 
@@ -140,71 +146,6 @@ std::string Rememberer::lower(std::string& str) {
   // threw an error since the function was written by the AI as a 
   // main function (type int)
   return str;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-
-std::vector<std::string> Rememberer::readlines(std::string& file_name) {
-    
-  std::ifstream input_file(file_name);
-  if (!input_file.is_open()) {
-    std::cerr << "Data file could not be opened." << std::endl;
-    exit(0);
-  }
-
-  std::vector<std::string> lines;
-  std::string line;
-
-  while (std::getline(input_file, line)) {
-    lines.push_back(line);
-  }
-
-  input_file.close();
-
-  return lines;
-
-}
-
-
-// This function acts identically to the word 'in' in Python.  It checks
-// if a string contains a substring, or if string_a is in string_b.
-bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) {
-  size_t found = string_b.find(string_a);
-
-  if (found != std::string::npos) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
-void Rememberer::writeStringToFile(std::string string_line, std::string& file_name) {
-  std::ofstream outputFile;
-
-  // Open the file in append mode. This ensures that new data is written 
-  // to the end of the file without overwriting existing content.
-  outputFile.open(file_name, std::ios::app);
-
-  if (outputFile.is_open()) {
-    std::getline(std::cin, string_line);
-
-    // Write the string to the file, followed by a newline character.
-    outputFile << string_line << std::endl;
-
-    // Close the file
-    outputFile.close();
-    std::cout << "Text written to file successfully." << std::endl;
-  } else {
-    std::cerr << "SYSTEM: There was a problem opening the file and unfortunately your response was not saved." << std::endl;
-  }
 }
 
 /////////////////////////////////////////////////////////////////////////

@@ -14,7 +14,9 @@ public:
     void addEntry(const std::string& question, const std::string& answer);
     void removeEntry(const std::string& question);
 
-    std::pair<std::string, std::string> findBestMatch(const std::string& inputQuestion);
+    std::string findBestMatch(const std::string& inputQuestion);
+
+    int linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b);
 
 private:
     std::unordered_map<std::string, std::string> qaMap;
