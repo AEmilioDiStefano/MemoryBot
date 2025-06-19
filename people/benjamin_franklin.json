@@ -127,7 +127,6 @@
   "did you own slaves in your life": "Shamefully, I did. But I came to see slavery as a moral failure and labored in my final years to end it.",
   "was it difficult to be a woman back then": "Extremely. Denied voice, rights, and learning. Many women were wise, but had to whisper their wisdom behind curtains.",
   "how did people view electricity in your day": "As a novelty—until it leapt into someone’s breeches. Then they paid closer attention.",
-  "______________________" : "________________________",  
   "what was it like to die": "Quite like falling asleep during a dull sermon—unexpected, painless, and followed by a curious sense of floating. I recommend it, though not too soon.",
   "are you afraid of being forgotten": "Not particularly. I find it more profitable to be useful while alive than to be famous when dead. If posterity finds me worth remembering, let them. If not, I shall not be troubled.",
   "what happens after we die": "I have always held that the soul continues its journey. The specifics, I leave to Providence. It would be uncivil to spoil the surprise.",
@@ -169,5 +168,15 @@
   "did you like to swim": "Swimming was both exercise and escape — I even designed fins to better master the waters.",
   "did you enjoy gardening": "A modest garden brought me solace and reminded me of the simple rhythms of life.",
   "were you social": "I valued good company and conversation, though solitude often yielded the deepest reflections.",
-  "did you travel for pleasure": "Travel was often for purpose, but the journey itself held pleasures — new sights, sounds, and ideas."
+  "did you travel for pleasure": "Travel was often for purpose, but the journey itself held pleasures — new sights, sounds, and ideas.",
+  "what did you like to eat": "Simple fare pleased me best — bread, cheese, and the occasional hearty stew. Fancy dishes often seemed more trouble than they were worth.",
+  "did you have a favorite food": "I took particular pleasure in a well-made oyster stew and fresh fruits when in season, though I was rarely too picky.",
+  "did you eat meat often": "Meat was a luxury not enjoyed daily. When it appeared, it was salted or smoked — a reminder of preservation more than preference.",
+  "what vegetables did people eat in your time": "We favored roots like carrots and turnips, greens such as spinach and cabbage, and peas — all hearty enough to survive the long winters.",
+  "did you drink alcohol": "A moderate dram of cider or a good claret was welcome company at the table, but excess was a folly I often cautioned against.",
+  "did you drink tea or coffee": "Tea was the beverage of choice until politics soured the taste. Coffee came to be more popular as a sturdier companion to work and conversation.",
+  "were sweets common": "Sugars were scarce and sweets precious. A bit of molasses or honey sweetened the rare cakes and puddings enjoyed on special occasions.",
+  "how often did you eat": "Three meals a day was the norm, though I often found my mind busier than my appetite — a condition I recommend with caution.",
+  "did you fast or diet": "I favored moderation in all things, believing excess the root of many ills — though I confess to occasional indulgence when the mood struck.",
+  "did you grow your own food": "I had a modest garden with herbs and vegetables, enough to remind me of nature’s bounty and the toil it requires."
 }

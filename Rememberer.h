@@ -18,6 +18,10 @@ public:
 
   void introduction();
 
+  void memoryBotConversation();
+
+  void talkToDeadPeople();
+
   void conversation();
 
   void writeStringToFile(std::string string_line, std::string& file_name);
@@ -25,6 +29,8 @@ public:
   std::string upper(std::string& str);
 
   std::string lower(std::string& str);
+
+  std::string capitalize(std:: string str);
 
   std::vector<std::string> split(std::string& str);
 

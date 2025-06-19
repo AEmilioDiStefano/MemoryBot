@@ -45,6 +45,30 @@ bool Rememberer::a_is_in_b(std::string string_a, std::string string_b)
   }
 }
 
+std::string Rememberer::capitalize(std:: string str) 
+{
+  
+  // Return an empty string if the uinput string is empty.
+  if (str.empty()) 
+  {
+    return ""; 
+  }
+
+  // Modify a copy of the parameter.
+  std::string result = str; 
+
+  // Capitalize the first character of the copied parameter string.
+  result[0] = std::toupper(result[0]);
+
+  // Convert all subsequent characters to lowercase.
+  for (size_t i = 1; i < result.length(); ++i) 
+  {
+      result[i] = std::tolower(result[i]);
+  }
+
+  return result;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 //////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
@@ -136,7 +160,8 @@ bool Rememberer::limitStringLength(std::string str)
 // This function breaks the ice between MemoryBot and the user.  
 // The values for the user_name and user_name_upper are 
 // extracted from user input.
-void Rememberer::introduction() {
+void Rememberer::introduction() 
+{
   // This variable stores the raw data input from the user after they are 
   // prompted for their name.
   std::string user_name;
@@ -147,17 +172,39 @@ void Rememberer::introduction() {
   Rememberer::first_name = name_vector[0];
   user_nametag = upper(first_name) + ": ";
 
-  std::cout << "\n  Who would you like to speak with?\n" << std::endl;
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Rememberer::memoryBotConversation() 
+{
+  std::string memory_bot_nametag = "MEMORY BOT: ";
+  std::string first_name_capitalized = capitalize(first_name);
+
+  std::cout <<  + "\n Hi " + first_name_capitalized + ".  What would you like me to remind you of?\n\n" + user_nametag; 
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Rememberer::talkToDeadPeople()
+{
+  
+  std::cout << "\n  WHO WOULD YOU LIKE TO SPEAK WITH?\n" << std::endl;
   std::cout << "   ENTITY:         NAME:         DESCRIPTION:" << std::endl;
   std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
   std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
   std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
-  std::cout << "\n  Enter only the entity number with no additional characters.\n\n" + user_nametag;
+  std::cout << "\n  Enter only the entity number to make your selection.\n\n" + user_nametag;
 
-  int user_choice;
-  std::cin >> user_choice;
+  int user_entity_choice;
+  std::cin >> user_entity_choice;
 
-  switch (user_choice) {
+  switch (user_entity_choice) {
     
     case 1483:
       entity_nametag = "  MARCUS: ";
@@ -202,7 +249,7 @@ void Rememberer::introduction() {
       greeting_strings = {
         "I am strong Grkb.  Grkb land from green mountain to dirty river.", 
         "Grkb is strong.", 
-        "Tell old woman from red mountain cave to give back canoe!  If not I find her.", 
+        "Tell old woman from red mountain cave to give back spear.  If not I find her.", 
         "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
         "Grkb is hunter of elk, killer of bear.  Grkb wears wolf pelt on shoulders. ", 
         "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
@@ -222,12 +269,11 @@ void Rememberer::introduction() {
 
       goodbye_strings = {
         "Grkb has spoken.", 
+        "Grkb has spoken.",  
         "Grkb has spoken.", 
-        "Grkb has spoken.", 
-        "Grkb has spoken.", 
-        "Grkb has spoken.", 
+        "Grkb has spoken.",  
         "Grkb find rocks now.", 
-        "Grkb ride canoe now.",
+        "Grkb go to river now.",
         "Grkb hunt horse now."
       };
 
@@ -269,13 +315,11 @@ void Rememberer::introduction() {
     default:
       std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
       break;
-  }
+  }  
 
   int random_greeting_index = randomIndex(greeting_strings);
   std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
-}
 
-void Rememberer::conversation() {
   InvertedIndex index;
   std::string current_question;
   std::string answer;
@@ -293,8 +337,12 @@ void Rememberer::conversation() {
 
       int random_goodbye_index = randomIndex(goodbye_strings);
       
-      // Say goodbye to the user and terminate the program.
+      // Say goodbye to the user and return to the main menu.
+      std::cout << "\n -----------------------------------------" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
       std::cout << "\n" + entity_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
       return;
 
       // Otherwise,
@@ -319,6 +367,39 @@ void Rememberer::conversation() {
   }
 
   index.saveToJson(memory_file_name);
+}
 
+void Rememberer::conversation() 
+{
+  int user_activity_choice;
+  while(true) 
+  {
+    std::cout << "\n  WHAT WOULD YOU LIKE TO DO?  \n" << std::endl;
+    std::cout << "    1. Startup MemoryBot" << std::endl;
+    std::cout << "    2. Talk to dead people" << std::endl;
+    std::cout << "    3. Exit" << std::endl; 
+    std::cout << "\n  Please enter 1, 2, or 3 to make your selection.  \n" << std::endl;
+
+    std::cin >> user_activity_choice;
+
+    switch (user_activity_choice) 
+    {
+      case 1:
+        memoryBotConversation();
+        break;
+
+      case 2:  
+        talkToDeadPeople();
+        break;
+
+      case 3:
+        std::cout << "\n  Goodbye.  \n" << std::endl;
+        exit(0);
+
+      default:
+        std::cout << "\n  Please try again using only the option number with no additional characters.\n" << std::endl;
+        std::cout << "  Enter 1 to startup MemoryBot, 2 to talk to dead people, or 3 to exit.\n" << std::endl;
+    }
+  }
 }
 
