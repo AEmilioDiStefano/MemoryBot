@@ -14,7 +14,7 @@ public:
     void addEntry(const std::string& question, const std::string& answer);
     void removeEntry(const std::string& question);
 
-    std::string findBestMatch(const std::string& inputQuestion);
+    std::string findBestMatch(const std::string& input_question, std::string not_found_string);
 
     int linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b);
 

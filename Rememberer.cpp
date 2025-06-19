@@ -1,5 +1,7 @@
 #include <iomanip>
 #include <iostream>
+#include <random>
+#include <chrono>
 #include <fstream>
 #include <sstream>
 #include <cctype>
@@ -11,67 +13,29 @@
 #include "Rememberer.h"
 #include "InvertedIndex.h"
 
-// This function breaks the ice between MemoryBot and the user.  
-// The values for the user_name and user_name_upper are 
-// extracted from user input.
-void Rememberer::introduction() {
-  // This variable stores the raw data input from the user after they are 
-  // prompted for their name.
-  std::string user_name;
-  std::cout << "\n\nPlease enter your name: \n" << std::endl;
-  std::cin >> user_name;
+int randomIndex(std::vector<std::string> input_vector) 
+{
+  int random_index;
 
-  //////////////// FIXME: Add a security measure to limit the 'size' ////////
-  /////////////////////// of user input for the user_name variable.  ////////
-  
-  std::vector<std::string> name_vector = split(user_name);
-  Rememberer::first_name = name_vector[0];
-  
-  std::string bot_name_all_caps = upper(bot_name);
-  first_name_upper = upper(first_name);
-  std::cout << "\n" + bot_name_all_caps +   ": Hello " + first_name + ", how can I be of service? \n\n" + first_name_upper + ": ";
-}
+    // Seed the random number generator
+    std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
 
-void Rememberer::conversation() {
-  InvertedIndex index;
-  std::string current_question;
-  std::string answer;
-  bool question_found = false;
+    // Check if the vector is not empty to avoid errors
+    if (!input_vector.empty()) {
+        // Create a distribution for indices
+        std::uniform_int_distribution<int> dist(0, input_vector.size() - 1);
 
-  index.loadFromJson(memory_file_name);
-  
-  std::cin >> current_question;
+        // Generate a random index
+        random_index = dist(rng);
+    } 
 
-  while (true) {
-    // If the word "goodbye" is in user input,
-    if (a_is_in_b("goodbye", current_question) == true) {
-      // Say goodbye to the user and terminate the program.
-      std::cout << "\n\nIt has been a pleasure, I hope that I have been of service. Goodbye for now." << std::endl;
-      return;
-
-      // Otherwise,
-    } else {
-
-      std::string current_question;
-      std::getline(std::cin, current_question);
-      std::string answer = index.findBestMatch(current_question);
-
-      std::cout << "\n" + bot_name_all_caps + ": " + answer << std::endl << std::endl << first_name_upper + ": ";
-
-      /////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////
-    }
-
-  }
-
-  index.saveToJson(memory_file_name);
-
+    return random_index;
 }
 
 // This function acts identically to the word 'in' in Python.  It checks
-// if a string contains a substring, or if string_a is in string_b.
-bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) {
+// if a string contains a substring (if string_a is in string_b).
+bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) 
+{
   size_t found = string_b.find(string_a);
 
   if (found != std::string::npos) {
@@ -89,7 +53,8 @@ bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) {
 // This method acts identically to Python's split() function.  It takes a  
 // string and creates a vector where each word in the string is an item  
 // in the vector.
-std::vector<std::string> Rememberer::split(std::string& str) {
+std::vector<std::string> Rememberer::split(std::string& str) 
+{
   std::vector<std::string> words;
   std::stringstream ss(str);
   std::string word;
@@ -114,7 +79,8 @@ std::vector<std::string> Rememberer::split(std::string& str) {
 
 // this line is modified (there was a const here for the string which threw 
 // an error)
-std::string Rememberer::upper(std::string& str) {
+std::string Rememberer::upper(std::string& str) 
+{
   // this line is unchanged from google ai
   std::transform(str.begin(), str.end(), str.begin(), ::toupper);
   // HERE, a line was omitted.
@@ -138,7 +104,8 @@ std::string Rememberer::upper(std::string& str) {
 // THIS IS NOTHING MORE THAN THE INVERSE OF THE ABOVE FUNTION
 // this line is modified (there was a const here for the string which threw 
 // an error)
-std::string Rememberer::lower(std::string& str) {
+std::string Rememberer::lower(std::string& str) 
+{
   // this line is unchanged from google ai
   std::transform(str.begin(), str.end(), str.begin(), ::tolower);
   // HERE, a line was omitted.
@@ -155,7 +122,8 @@ std::string Rememberer::lower(std::string& str) {
 // SECURITY FUNTIONS 
 // The following functions enhance system security: 
 //////////////// FIXME: Make this function validate user input length ///
-bool Rememberer::limitStringLength(std::string str) {
+bool Rememberer::limitStringLength(std::string str) 
+{
   if (str == str) {
     return true;
   }
@@ -165,7 +133,192 @@ bool Rememberer::limitStringLength(std::string str) {
   }
 }
 
+// This function breaks the ice between MemoryBot and the user.  
+// The values for the user_name and user_name_upper are 
+// extracted from user input.
+void Rememberer::introduction() {
+  // This variable stores the raw data input from the user after they are 
+  // prompted for their name.
+  std::string user_name;
+  std::cout << "\n\n  Please enter your name: \n" << std::endl;
+  std::getline(std::cin, user_name);
+  
+  std::vector<std::string> name_vector = split(user_name);
+  Rememberer::first_name = name_vector[0];
+  user_nametag = upper(first_name) + ": ";
 
+  std::cout << "\n  Who would you like to speak with?\n" << std::endl;
+  std::cout << "   ENTITY:         NAME:         DESCRIPTION:" << std::endl;
+  std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
+  std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
+  std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
+  std::cout << "\n  Enter only the entity number with no additional characters.\n\n" + user_nametag;
 
+  int user_choice;
+  std::cin >> user_choice;
 
+  switch (user_choice) {
+    
+    case 1483:
+      entity_nametag = "  MARCUS: ";
+      memory_file_name = "people/roman_soldier.json";
+
+      greeting_strings = {
+        "You speak. I am listening.", 
+        "What do you seek from a dead man?",
+        "I did not expect company here.", 
+        "Speak, friend.  Stir now the memories that I had buried.",
+        "Speak, and I will answer if I can.", 
+        "Strange that voices still reach me.", 
+        "Another voice... very well, let us speak."
+      };
+
+      unsure_of_answer_strings = {
+        "I do not know, though I have thought on it.", 
+        "That is beyond my understanding now.", 
+        "Even in life I had no answer to that.", 
+        "If there is truth in it, it has not been shown to me.", 
+        "I remember fragments, nothing clear.", 
+        "I feel the shape of it, but not the meaning.", 
+        "I cannot say. Not anymore.", 
+        "Some things are hidden, even in death."
+      };
+
+      goodbye_strings = {
+        "Then go, and remember what I have said.", 
+        "Leave me now. I will return to my waiting.",
+        "Our time fades, as all things do.",
+        "Walk carefully, wherever you dwell.",
+        "May your questions bring you wisdom.",
+        "Let the silence take me again."
+      };
+      
+      break;
+    
+    case 225:
+      entity_nametag = "  GRKB: ";
+      memory_file_name = "people/grkb.json";
+
+      greeting_strings = {
+        "I am strong Grkb.  Grkb land from green mountain to dirty river.", 
+        "Grkb is strong.", 
+        "Tell old woman from red mountain cave to give back canoe!  If not I find her.", 
+        "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
+        "Grkb is hunter of elk, killer of bear.  Grkb wears wolf pelt on shoulders. ", 
+        "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
+        "Heads in Grkb's cave hang over bed.  Trophies of war.  Sometimes heads talk to Grkb.",
+        "Grkb is busy - found eggs.  Ask question quickly."
+      };
+
+      unsure_of_answer_strings = {
+        "Grkb no.", 
+        "Not see what you say.", 
+        "Grkb is confused.  Now Grkb is angry!",
+        "Grkb does not understand.",
+        "Grkb not speak future language.", 
+        "Grkb is happy.", 
+        "Grkb has no answer."
+      };
+
+      goodbye_strings = {
+        "Grkb has spoken.", 
+        "Grkb has spoken.", 
+        "Grkb has spoken.", 
+        "Grkb has spoken.", 
+        "Grkb has spoken.", 
+        "Grkb find rocks now.", 
+        "Grkb ride canoe now.",
+        "Grkb hunt horse now."
+      };
+
+      break;
+
+    case 535:
+      entity_nametag = "  BEN: ";
+      memory_file_name = "people/benjamin_franklin.json";
+
+      greeting_strings = {
+        "Ah!  A voice not my own - always refreshing.", 
+        "Speak freely, friend.  My ears are as open as my spectacles are wide.", 
+        "Salutations!  The mind stirs when strangers speak.", 
+        "Well met!  I trust you bring a question, a curiosity, or at least a decent story.", 
+        "A pleasure, truly.  What mischief or wisdom shall we stir today?", 
+        "A fine day for discourse, assuming no thunderclouds in mind.", 
+        "Hail and hello - if its trouble you speak, you're a few decades too late.", 
+        "Ah, good day to you - how fares the world of the living?"
+      };
+
+      unsure_of_answer_strings = {
+        "I cannot say - my candle burned low before I reached that chapter.", 
+        "In truth, I am unable to answer that with anything but guesswork.", 
+        "I must admit: I have not the faintest notion, but I admire the inquiry.", 
+        "I know not, but I dearly wish I did.", 
+        "That is a puzzle yet unsolved, at least by me."
+      };
+
+      goodbye_strings = {
+        "Then we part - may your path be better lit than ours often were.", 
+        "Go well, and if you stumble, stumble forward.", 
+        "Fare the well - and may your questions multiply like rabbits in spring.", 
+        "Well, thats me back to the aether.  Farewell for now.", 
+        "I leave you to your time - a more interesting age, I trust."
+      };
+      
+      break;
+
+    default:
+      std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
+      break;
+  }
+
+  int random_greeting_index = randomIndex(greeting_strings);
+  std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
+}
+
+void Rememberer::conversation() {
+  InvertedIndex index;
+  std::string current_question;
+  std::string answer;
+  bool question_found = false;
+
+  index.loadFromJson(memory_file_name);
+
+  while (true) {
+
+    std::cin >> current_question;
+    
+    // If the word "goodbye" is in user input,
+    if (a_is_in_b("goodbye", current_question) == true) 
+    {
+
+      int random_goodbye_index = randomIndex(goodbye_strings);
+      
+      // Say goodbye to the user and terminate the program.
+      std::cout << "\n" + entity_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
+      return;
+
+      // Otherwise,
+    } 
+    else 
+    {
+
+      std::string current_question;
+      std::getline(std::cin, current_question);
+
+      int random_unsure_index = randomIndex(unsure_of_answer_strings);
+
+      std::string unsure_string =  unsure_of_answer_strings[random_unsure_index];
+
+      std::string answer = index.findBestMatch(current_question, unsure_string);
+
+      std::cout << "\n" + entity_nametag + answer << std::endl << std::endl << user_nametag;
+      continue;
+
+    }
+
+  }
+
+  index.saveToJson(memory_file_name);
+
+}
 

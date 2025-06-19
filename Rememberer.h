@@ -31,12 +31,13 @@ public:
   std::vector<std::string> readlines(std::string& file_name);
 
   bool a_is_in_b(std::string sub_string, std::string full_string);
-
-  // This variable stores the name of our robot.  
-  // Changing this will change the robot's name globally.
-  std::string bot_name = "Memory Bot";
   
-  std::string bot_name_all_caps = upper(bot_name);
+  std::string entity_nametag;
+  std::string user_nametag;
+  std::string memory_file_name;
+  std::vector<std::string> greeting_strings;
+  std::vector<std::string> unsure_of_answer_strings;
+  std::vector<std::string> goodbye_strings;
 
 private:
   std::string response;
@@ -51,12 +52,6 @@ private:
   // excessiveuser input.
   bool limitStringLength(std::string str);
 
-  // This variable stores the name of our robot's brain file.  
-  // Changing this will change the name of the brain file 
-  // searched for by the system.
-  std::string memory_file_name = "brain.json";
-
 };
 
 #endif
-
