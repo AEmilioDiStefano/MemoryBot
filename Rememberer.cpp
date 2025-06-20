@@ -318,48 +318,6 @@ void Rememberer::invertedIndexConversationLoop(
 
       // Otherwise,
     } 
-
-    else if (current_question.find("remember") != std::string::npos && current_question.find("something") != std::string::npos && current_question.find("for") != std::string::npos && current_question.find("me") != std::string::npos)
-    {
-      std::string new_question;
-
-      std::cout << "\n" + entity_nametag + "Certainly.  Enter the question which you would like for me to remember the answer to.  If you want to skip adding a new question, say 'nevermind'.\n\n" + user_nametag << std::endl;
-      std::cin >> new_question;
-
-      if (new_question.find("nevermind") != std::string::npos)
-      {
-        std::cout << "\n" + entity_nametag + "Alright, let's get back to our conversation.\n\n" + user_nametag << std::endl;
-        continue;
-      }
-      else 
-      {
-
-        std::string new_answer;
-
-        std::cout << "\n" + entity_nametag + "Enter the answer which you would like for me to remember for this question?\n\n" + user_nametag << std::endl;
-        std::cin >> new_answer;
-
-        if (new_answer.find("nevermind") != std::string::npos) 
-        {
-          std::cout << "\n" + entity_nametag + "Let's get back to our conversation.  What else would you like to know.\n\n" + user_nametag << std::endl;
-          continue;
-        }
-        else 
-        {
-          index.addEntry(new_question, new_answer);
-          std::cout << "\n" + entity_nametag + "Alright, I'll remember that for later.\n\n" + user_nametag << std::endl;
-          continue;
-        }
-
-      }
-
-    }
-
-    else if (current_question.find("forget") != std::string::npos && current_question.find("last") != std::string::npos && current_question.find("answer") != std::string::npos && (current_question.find("that") != std::string::npos || current_question.find("the") != std::string::npos))
-    {
-      
-    }
-
     else
     {
       std::string current_question;
