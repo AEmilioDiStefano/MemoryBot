@@ -10,6 +10,9 @@
 #include <map>
 #include <algorithm>
 #include "InvertedIndex.h"
+#include "external/nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 class Rememberer {
 public:
@@ -41,6 +44,12 @@ public:
   int randomIndex(std::vector<std::string> input_vector);
 
   void invertedIndexConversationLoop(std::string entity_nametag, std::string memory_file_name, std::vector<std::string> greeting_strings, std::vector<std::string> unsure_of_answer_strings, std::vector<std::string> goodbye_strings);
+  
+  void addKnowledge(const std::string& filename);
+
+  json loadExistingJSON(const std::string& filename);
+
+  std::string sanitize(const std::string& input);
   
   std::string entity_nametag;
   std::string user_nametag;

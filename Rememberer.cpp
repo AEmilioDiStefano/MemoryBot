@@ -10,6 +10,7 @@
 #include <cmath>
 #include <map>
 #include <algorithm>
+#include "external/nlohmann/json.hpp"
 #include "Rememberer.h"
 #include "InvertedIndex.h"
 
@@ -34,31 +35,50 @@ void Rememberer::conversation()
   int user_activity_choice;
   while(true) 
   {
-    std::cout << "\n  WHAT WOULD YOU LIKE TO DO?  \n" << std::endl;
+    std::cout << "\n  HELLO " + upper(first_name) << std::endl;
+    std::cout << "  WHAT WOULD YOU LIKE TO DO?" << std::endl;
+    std::cout << "       (MAIN MENU)  \n" << std::endl;
     std::cout << "    1. Startup MemoryBot" << std::endl;
-    std::cout << "    2. Talk to dead people" << std::endl;
-    std::cout << "    3. Exit" << std::endl; 
-    std::cout << "\n  Please enter 1, 2, or 3 to make your selection.  \n" << std::endl;
+    std::cout << "    2. Add knowledge" << std::endl;
+    std::cout << "    3. Talk to dead people" << std::endl;
+    std::cout << "\n    0. Exit" << std::endl; 
+    std::cout << "\n  Please enter 1, 2, 3, or 0 to make your selection.  \n" << std::endl;
 
     std::cin >> user_activity_choice;
+    std::cin.ignore();
 
     switch (user_activity_choice) 
     {
       case 1:
+      {
         memoryBotConversation();
         break;
-
-      case 2:  
-        talkToDeadPeople();
+      }
+      
+      case 2:
+      {
+        
+        addKnowledge("memory_file_name.json");
         break;
+      }
 
       case 3:
+      {
+        talkToDeadPeople();
+        break;
+      }
+
+      case 0:
+      {
         std::cout << "\n  Goodbye.  \n" << std::endl;
         exit(0);
+      }
 
       default:
+      {
         std::cout << "\n  Please try again using only the option number with no additional characters.\n" << std::endl;
-        std::cout << "  Enter 1 to startup MemoryBot, 2 to talk to dead people, or 3 to exit.\n" << std::endl;
+        std::cout << "  Enter 1 to startup MemoryBot, 2 to talk to dead people, or 0 to exit.\n" << std::endl;
+      }
     }
   }
 }
@@ -70,14 +90,8 @@ void Rememberer::conversation()
 void Rememberer::memoryBotConversation() 
 {
 
-  std::cout << "\n  -----------------------------------------" << std::endl;
-  std::cout << "  -----------------------------------------" << std::endl;
-  std::cout << "\n  MEMORY BOT HAS BEEN INITIATED" << std::endl;
-  std::cout << "\n  TO EXIT, say: \n    'goodbye'" << std::endl;
-  std::cout << "\n  -----------------------------------------" << std::endl;
-  std::cout << "  -----------------------------------------\n\n" << std::endl;
-
   std::string first_name_capitalized = capitalize(first_name);
+
   std::string entity_nametag = "  MEMORY BOT: ";
   memory_file_name = "memory_bot.json";
 
@@ -95,7 +109,7 @@ void Rememberer::memoryBotConversation()
     "I'm sorrry, I don't recall.", 
     "Sorry " + first_name_capitalized + ", I don't recall.", 
     "Apologies, " + first_name_capitalized + ".  I'm entirely not sure.", 
-    "As the Colombians say, lo que le digo es mentira.  My only answer would be a lie.  In other words, I am unsure.", 
+    "As the Colombians say, lo que le digo es mentira.  My answer would be a lie.  In other words, I am unsure.", 
     "I don't have and answer for that.", 
     "I'm not sure.", 
     "I don't know, but I would love to learn.", 
@@ -117,16 +131,24 @@ void Rememberer::memoryBotConversation()
     "I enjoyed this conversation."
   };
 
-  int random_greeting_index = randomIndex(greeting_strings);
 
-  std::cout << entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
+    std::cout << "\n  -----------------------------------------" << std::endl;
+    std::cout << "  -----------------------------------------" << std::endl;
+    std::cout << "\n  MEMORY BOT HAS BEEN INITIATED" << std::endl;
+    std::cout << "\n  TO EXIT, say: \n    'goodbye'" << std::endl;
+    std::cout << "\n  -----------------------------------------" << std::endl;
+    std::cout << "  -----------------------------------------\n\n" << std::endl;
 
-  invertedIndexConversationLoop(
-  entity_nametag, 
-  memory_file_name, 
-  greeting_strings,
-  unsure_of_answer_strings,
-  goodbye_strings);
+    int random_greeting_index = randomIndex(greeting_strings);
+
+    std::cout << entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
+
+    invertedIndexConversationLoop(
+    entity_nametag, 
+    memory_file_name, 
+    greeting_strings,
+    unsure_of_answer_strings,
+    goodbye_strings);
 }
 
 void Rememberer::talkToDeadPeople()
@@ -137,14 +159,17 @@ void Rememberer::talkToDeadPeople()
   std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
   std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
   std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
-  std::cout << "\n  Enter only the entity number to make your selection.\n\n" + user_nametag;
+  std::cout << "\n          (Enter 0 to go back to the Main Menu)" << std::endl;
+  std::cout << "\n   Enter ONLY THE ENTITY NUMBER to make your selection,\n   or ENTER 0 to go back to the MAIN MENU\n\n" + user_nametag;
 
   int user_entity_choice;
   std::cin >> user_entity_choice;
+  std::cin.ignore();
 
   switch (user_entity_choice) {
     
     case 1483:
+    {
       entity_nametag = "  MARCUS: ";
       memory_file_name = "people/roman_soldier.json";
 
@@ -179,8 +204,10 @@ void Rememberer::talkToDeadPeople()
       };
       
       break;
+    }
     
     case 225:
+    {
       entity_nametag = "  GRKB: ";
       memory_file_name = "people/grkb.json";
 
@@ -191,7 +218,6 @@ void Rememberer::talkToDeadPeople()
         "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
         "Grkb is hunter of elk, killer of bear.  Grkb wears wolf pelt on shoulders. ", 
         "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
-        "Heads in Grkb's cave hang over bed.  Trophies of war.  Sometimes heads talk to Grkb.",
         "Grkb is busy - found eggs.  Ask question quickly."
       };
 
@@ -216,8 +242,10 @@ void Rememberer::talkToDeadPeople()
       };
 
       break;
+    }
 
     case 535:
+    {
       entity_nametag = "  BENJAMIN: ";
       memory_file_name = "people/benjamin_franklin.json";
 
@@ -249,10 +277,18 @@ void Rememberer::talkToDeadPeople()
       };
       
       break;
+    }
+
+    case 0: 
+    {
+      return;
+    }
 
     default:
+    {
       std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
       break;
+    }
   }  
 
   int random_greeting_index = randomIndex(greeting_strings);
@@ -265,17 +301,6 @@ void Rememberer::talkToDeadPeople()
   unsure_of_answer_strings,
   goodbye_strings);
 }
-
-/////  ____  ______ _____ _____ _   _ 
-///// |  _ \|  ____/ ____|_   _| \ | |
-///// | |_) | |__ | |  __  | | |  \| |
-///// |  _ <|  __|| | |_ | | | | . ` |
-///// | |_) | |___| |__| |_| |_| |\  |
-///// |____/|______\_____|_____|_| \_|
-/////                               
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 // This function controls our program's use of the InvertedIndex class.
 // Information from around the system is brought together to assemble a
@@ -298,7 +323,7 @@ void Rememberer::invertedIndexConversationLoop(
 
   while (true) {
 
-    std::cin >> current_question;
+    std::getline(std::cin, current_question);
     
     // If the word "goodbye" is in user input,
     if (a_is_in_b("goodbye", current_question) == true) 
@@ -335,6 +360,83 @@ void Rememberer::invertedIndexConversationLoop(
   index.saveToJson(memory_file_name);
 }
                   
+/////  ____  ______ _____ _____ _   _ 
+///// |  _ \|  ____/ ____|_   _| \ | |
+///// | |_) | |__ | |  __  | | |  \| |
+///// |  _ <|  __|| | |_ | | | | . ` |
+///// | |_) | |___| |__| |_| |_| |\  |
+///// |____/|______\_____|_____|_| \_|
+/////                               
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Rememberer::addKnowledge(const std::string& filename)
+{
+  json j = loadExistingJSON(filename);
+
+  std::string question, answer, choice;
+
+  do {
+      // Loop until a non-duplicate question is entered
+      while (true) {
+        std::cout << "Enter a question: ";
+        std::getline(std::cin, question);
+
+        std::string sanitizedQuestion = sanitize(question);
+
+        if (j.contains(sanitizedQuestion)) 
+        {
+            std::cout << "That question already exists. Please enter a new one.\n";
+        } 
+        else 
+        {
+            // Valid new question, now ask for the answer
+            std::cout << "Enter the answer: ";
+            std::getline(std::cin, answer);
+
+            j[sanitizedQuestion] = answer;
+            break;
+        }
+      }
+
+      std::cout << "Add another question-answer pair? (yes/no): ";
+      std::getline(std::cin, choice);
+
+  } while (choice == "yes" || choice == "Yes" || choice == "YES");
+
+  // Save updated JSON
+  std::ofstream file(filename);
+  if (!file) {
+      std::cerr << "Error opening file for writing: " << filename << std::endl;
+      return;
+  }
+
+  file << j.dump(4); // Pretty-printed JSON
+  file.close();
+
+  std::cout << "Updated question-answer pairs saved to " << filename << std::endl;
+}
+
+/**
+ * Loads existing JSON from file if it exists, or returns an empty JSON object.
+ */
+json Rememberer::loadExistingJSON(const std::string& filename) {
+    std::ifstream inFile(filename);
+    if (!inFile) {
+        return json{};
+    }
+
+    json existing;
+    try {
+        inFile >> existing;
+    } catch (...) {
+        std::cerr << "Warning: Failed to parse existing JSON. Starting fresh.\n";
+        return json{};
+    }
+    return existing;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,7 +446,7 @@ void Rememberer::invertedIndexConversationLoop(
 /// |  __| | . ` | |  | |
 /// | |____| |\  | |__| |
 /// |______|_| \_|_____/ 
-//\\   
+//\\ 
 
 int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
@@ -475,17 +577,27 @@ std::string Rememberer::lower(std::string& str)
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-// SECURITY FUNTIONS 
-// The following functions enhance system security: 
-//////////////// FIXME: Make this function validate user input length ///
-bool Rememberer::limitStringLength(std::string str) 
-{
-  if (str == str) {
-    return true;
-  }
-  else {
-    return false;
+//   _____                      _ _             
+//  / ____|                    (_) |            
+// | (___   ___  ___ _   _ _ __ _| |_ _   _     
+//  \___ \ / _ \/ __| | | | '__| | __| | | |    
+//  ____) |  __/ (__| |_| | |  | | |_| |_| |    
+// |_____/ \___|\___|\__,_|_| _|_|\__|\__, |    
+// |  ____|              | | (_)       __/ |    
+// | |__ _   _ _ __   ___| |_ _  ___  |___/ ___ 
+// |  __| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+// | |  | |_| | | | | (__| |_| | (_) | | | \__ \
+// |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+//
+// The following functions enhance system security. 
 
-  }
+std::string Rememberer::sanitize(const std::string& input) {
+  std::string output;
+    for (char c : input) {
+        if (std::isalnum(static_cast<unsigned char>(c)) || std::isspace(static_cast<unsigned char>(c))) {
+            output += std::tolower(static_cast<unsigned char>(c));
+        }
+    }
+    return output;
 }
 
