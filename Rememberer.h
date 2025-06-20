@@ -39,6 +39,8 @@ public:
   bool a_is_in_b(std::string sub_string, std::string full_string);
 
   int randomIndex(std::vector<std::string> input_vector);
+
+  void invertedIndexConversationLoop(std::string entity_nametag, std::string memory_file_name, std::vector<std::string> greeting_strings, std::vector<std::string> unsure_of_answer_strings, std::vector<std::string> goodbye_strings);
   
   std::string entity_nametag;
   std::string user_nametag;

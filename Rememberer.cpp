@@ -80,7 +80,7 @@ void Rememberer::memoryBotConversation()
   std::cout << "  -----------------------------------------\n\n" << std::endl;
 
   std::string first_name_capitalized = capitalize(first_name);
-  std::string bot_nametag = "  MEMORY BOT: ";
+  std::string entity_nametag = "  MEMORY BOT: ";
   memory_file_name = "memory_bot.json";
 
   greeting_strings = {
@@ -121,60 +121,15 @@ void Rememberer::memoryBotConversation()
 
   int random_greeting_index = randomIndex(greeting_strings);
 
-  std::cout << bot_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
+  std::cout << entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
 
-  InvertedIndex index;
-  std::string current_question;
-  std::string answer;
-  bool question_found = false;
-
-  index.loadFromJson(memory_file_name);
-
-  while (true) {
-
-    std::cin >> current_question;
-    
-    // If the word "goodbye" is in user input,
-    if (a_is_in_b("goodbye", current_question) == true) 
-    {
-
-      int random_goodbye_index = randomIndex(goodbye_strings);
-      
-      // Say goodbye to the user and return to the main menu.
-      std::cout << "\n -----------------------------------------" << std::endl;
-      std::cout << " -----------------------------------------" << std::endl;
-      std::cout << "\n" + bot_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
-      std::cout << " -----------------------------------------" << std::endl;
-      std::cout << " -----------------------------------------" << std::endl;
-      return;
-
-      // Otherwise,
-    } 
-    else 
-    {
-
-      std::string current_question;
-      std::getline(std::cin, current_question);
-
-      int random_unsure_index = randomIndex(unsure_of_answer_strings);
-
-      std::string unsure_string =  unsure_of_answer_strings[random_unsure_index];
-
-      std::string answer = index.findBestMatch(current_question, unsure_string);
-
-      std::cout << "\n" + bot_nametag + answer << std::endl << std::endl << user_nametag;
-      continue;
-
-    }
-
-  }
-
-  index.saveToJson(memory_file_name);
+  invertedIndexConversationLoop(
+  entity_nametag, 
+  memory_file_name, 
+  greeting_strings,
+  unsure_of_answer_strings,
+  goodbye_strings);
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Rememberer::talkToDeadPeople()
 {
@@ -305,6 +260,37 @@ void Rememberer::talkToDeadPeople()
   int random_greeting_index = randomIndex(greeting_strings);
   std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
 
+  invertedIndexConversationLoop(
+  entity_nametag, 
+  memory_file_name, 
+  greeting_strings,
+  unsure_of_answer_strings,
+  goodbye_strings);
+}
+
+/////  ____  ______ _____ _____ _   _ 
+///// |  _ \|  ____/ ____|_   _| \ | |
+///// | |_) | |__ | |  __  | | |  \| |
+///// |  _ <|  __|| | |_ | | | | . ` |
+///// | |_) | |___| |__| |_| |_| |\  |
+///// |____/|______\_____|_____|_| \_|
+/////                               
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// This function controls our program's use of the InvertedIndex class.
+// Information from around the system is brought together to assemble a
+// conversation loop so that the user can speak with the chosen entity.
+void Rememberer::invertedIndexConversationLoop(
+  // Function parameters:
+  std::string entity_nametag, 
+  std::string memory_file_name, 
+  std::vector<std::string> greeting_strings,
+  std::vector<std::string> unsure_of_answer_strings,
+  std::vector<std::string> goodbye_strings) 
+  {
+  // Local variables:
   InvertedIndex index;
   std::string current_question;
   std::string answer;
@@ -332,9 +318,50 @@ void Rememberer::talkToDeadPeople()
 
       // Otherwise,
     } 
-    else 
-    {
 
+    else if (current_question.find("remember") != std::string::npos && current_question.find("something") != std::string::npos && current_question.find("for") != std::string::npos && current_question.find("me") != std::string::npos)
+    {
+      std::string new_question;
+
+      std::cout << "\n" + entity_nametag + "Certainly.  Enter the question which you would like for me to remember the answer to.  If you want to skip adding a new question, say 'nevermind'.\n\n" + user_nametag << std::endl;
+      std::cin >> new_question;
+
+      if (new_question.find("nevermind") != std::string::npos)
+      {
+        std::cout << "\n" + entity_nametag + "Alright, let's get back to our conversation.\n\n" + user_nametag << std::endl;
+        continue;
+      }
+      else 
+      {
+
+        std::string new_answer;
+
+        std::cout << "\n" + entity_nametag + "Enter the answer which you would like for me to remember for this question?\n\n" + user_nametag << std::endl;
+        std::cin >> new_answer;
+
+        if (new_answer.find("nevermind") != std::string::npos) 
+        {
+          std::cout << "\n" + entity_nametag + "Let's get back to our conversation.  What else would you like to know.\n\n" + user_nametag << std::endl;
+          continue;
+        }
+        else 
+        {
+          index.addEntry(new_question, new_answer);
+          std::cout << "\n" + entity_nametag + "Alright, I'll remember that for later.\n\n" + user_nametag << std::endl;
+          continue;
+        }
+
+      }
+
+    }
+
+    else if (current_question.find("forget") != std::string::npos && current_question.find("last") != std::string::npos && current_question.find("answer") != std::string::npos && (current_question.find("that") != std::string::npos || current_question.find("the") != std::string::npos))
+    {
+      
+    }
+
+    else
+    {
       std::string current_question;
       std::getline(std::cin, current_question);
 
@@ -346,13 +373,22 @@ void Rememberer::talkToDeadPeople()
 
       std::cout << "\n" + entity_nametag + answer << std::endl << std::endl << user_nametag;
       continue;
-
     }
-
   }
 
   index.saveToJson(memory_file_name);
 }
+                  
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+///  ______ _   _ _____  
+/// |  ____| \ | |  __ \ 
+/// | |__  |  \| | |  | |
+/// |  __| | . ` | |  | |
+/// | |____| |\  | |__| |
+/// |______|_| \_|_____/ 
+//\\   
 
 int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
