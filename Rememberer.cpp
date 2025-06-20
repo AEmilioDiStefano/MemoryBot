@@ -58,7 +58,7 @@ void Rememberer::conversation()
       case 2:
       {
         
-        addKnowledge("memory_file_name.json");
+        addKnowledge("memory_bot.json");
         break;
       }
 
