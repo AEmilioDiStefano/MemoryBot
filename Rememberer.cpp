@@ -73,8 +73,6 @@ void Rememberer::memoryBotConversation()
   std::cout << "\n  -----------------------------------------" << std::endl;
   std::cout << "  -----------------------------------------" << std::endl;
   std::cout << "\n  MEMORY BOT HAS BEEN INITIATED" << std::endl;
-  std::cout << "\n  TO ADD KNOWLEDGE, say: \n    'remember something for me'" << std::endl;
-  std::cout << "\n  TO REMOVE AN ANSWER, say: \n    'forget that last answer'" << std::endl;
   std::cout << "\n  TO EXIT, say: \n    'goodbye'" << std::endl;
   std::cout << "\n  -----------------------------------------" << std::endl;
   std::cout << "  -----------------------------------------\n\n" << std::endl;
@@ -220,7 +218,7 @@ void Rememberer::talkToDeadPeople()
       break;
 
     case 535:
-      entity_nametag = "  BEN: ";
+      entity_nametag = "  BENJAMIN: ";
       memory_file_name = "people/benjamin_franklin.json";
 
       greeting_strings = {
@@ -238,8 +236,8 @@ void Rememberer::talkToDeadPeople()
         "I cannot say - my candle burned low before I reached that chapter.", 
         "In truth, I am unable to answer that with anything but guesswork.", 
         "I must admit: I have not the faintest notion, but I admire the inquiry.", 
-        "I know not, but I dearly wish I did.", 
-        "That is a puzzle yet unsolved, at least by me."
+        "I know not of what you speak, but I dearly wish I did.", 
+        "Yoru words are a puzzle yet unsolved, at least by me."
       };
 
       goodbye_strings = {
