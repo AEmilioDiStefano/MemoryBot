@@ -58,7 +58,7 @@ void Rememberer::conversation()
       case 2:
       {
         
-        addKnowledge("memory_bot.json");
+        addKnowledge(memory_file_name);
         break;
       }
 
@@ -343,8 +343,7 @@ void Rememberer::invertedIndexConversationLoop(
     } 
     else
     {
-      std::string current_question;
-      std::getline(std::cin, current_question);
+      
 
       int random_unsure_index = randomIndex(unsure_of_answer_strings);
 
