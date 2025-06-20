@@ -13,150 +13,6 @@
 #include "Rememberer.h"
 #include "InvertedIndex.h"
 
-int randomIndex(std::vector<std::string> input_vector) 
-{
-  int random_index;
-
-    // Seed the random number generator
-    std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
-
-    // Check if the vector is not empty to avoid errors
-    if (!input_vector.empty()) {
-        // Create a distribution for indices
-        std::uniform_int_distribution<int> dist(0, input_vector.size() - 1);
-
-        // Generate a random index
-        random_index = dist(rng);
-    } 
-
-    return random_index;
-}
-
-// This function acts identically to the word 'in' in Python.  It checks
-// if a string contains a substring (if string_a is in string_b).
-bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) 
-{
-  size_t found = string_b.find(string_a);
-
-  if (found != std::string::npos) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-std::string Rememberer::capitalize(std:: string str) 
-{
-  
-  // Return an empty string if the uinput string is empty.
-  if (str.empty()) 
-  {
-    return ""; 
-  }
-
-  // Modify a copy of the parameter.
-  std::string result = str; 
-
-  // Capitalize the first character of the copied parameter string.
-  result[0] = std::toupper(result[0]);
-
-  // Convert all subsequent characters to lowercase.
-  for (size_t i = 1; i < result.length(); ++i) 
-  {
-      result[i] = std::tolower(result[i]);
-  }
-
-  return result;
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
-// This method acts identically to Python's split() function.  It takes a  
-// string and creates a vector where each word in the string is an item  
-// in the vector.
-std::vector<std::string> Rememberer::split(std::string& str) 
-{
-  std::vector<std::string> words;
-  std::stringstream ss(str);
-  std::string word;
-  while (std::getline(ss, word, ' ')) {
-    words.push_back(word);
-  }
-  return words;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
-// This function acts identically to Python's upper() function.  It turns 
-// all of a string's characters to uppercase.
-
-// this line is modified (there was a const here for the string which threw 
-// an error)
-std::string Rememberer::upper(std::string& str) 
-{
-  // this line is unchanged from google ai
-  std::transform(str.begin(), str.end(), str.begin(), ::toupper);
-  // HERE, a line was omitted.
-  // this next line was added by me, what was there originally (return 0) 
-  // threw an error since the function was written by the AI as a 
-  // main function (type int)
-  return str;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
-// This function acts identically to Python's upper() function.  It turns 
-// all of a string's characters to uppercase.
-
-// THIS IS NOTHING MORE THAN THE INVERSE OF THE ABOVE FUNTION
-// this line is modified (there was a const here for the string which threw 
-// an error)
-std::string Rememberer::lower(std::string& str) 
-{
-  // this line is unchanged from google ai
-  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  // HERE, a line was omitted.
-  // this next line was added by me, what was there originally (return 0) 
-  // threw an error since the function was written by the AI as a 
-  // main function (type int)
-  return str;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-// SECURITY FUNTIONS 
-// The following functions enhance system security: 
-//////////////// FIXME: Make this function validate user input length ///
-bool Rememberer::limitStringLength(std::string str) 
-{
-  if (str == str) {
-    return true;
-  }
-  else {
-    return false;
-
-  }
-}
-
 // This function breaks the ice between MemoryBot and the user.  
 // The values for the user_name and user_name_upper are 
 // extracted from user input.
@@ -171,8 +27,40 @@ void Rememberer::introduction()
   std::vector<std::string> name_vector = split(user_name);
   Rememberer::first_name = name_vector[0];
   user_nametag = upper(first_name) + ": ";
+}
 
+void Rememberer::conversation() 
+{
+  int user_activity_choice;
+  while(true) 
+  {
+    std::cout << "\n  WHAT WOULD YOU LIKE TO DO?  \n" << std::endl;
+    std::cout << "    1. Startup MemoryBot" << std::endl;
+    std::cout << "    2. Talk to dead people" << std::endl;
+    std::cout << "    3. Exit" << std::endl; 
+    std::cout << "\n  Please enter 1, 2, or 3 to make your selection.  \n" << std::endl;
 
+    std::cin >> user_activity_choice;
+
+    switch (user_activity_choice) 
+    {
+      case 1:
+        memoryBotConversation();
+        break;
+
+      case 2:  
+        talkToDeadPeople();
+        break;
+
+      case 3:
+        std::cout << "\n  Goodbye.  \n" << std::endl;
+        exit(0);
+
+      default:
+        std::cout << "\n  Please try again using only the option number with no additional characters.\n" << std::endl;
+        std::cout << "  Enter 1 to startup MemoryBot, 2 to talk to dead people, or 3 to exit.\n" << std::endl;
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,10 +69,107 @@ void Rememberer::introduction()
 
 void Rememberer::memoryBotConversation() 
 {
-  std::string memory_bot_nametag = "MEMORY BOT: ";
-  std::string first_name_capitalized = capitalize(first_name);
 
-  std::cout <<  + "\n Hi " + first_name_capitalized + ".  What would you like me to remind you of?\n\n" + user_nametag; 
+  std::cout << "\n  -----------------------------------------" << std::endl;
+  std::cout << "  -----------------------------------------" << std::endl;
+  std::cout << "\n  MEMORY BOT HAS BEEN INITIATED" << std::endl;
+  std::cout << "\n  TO ADD KNOWLEDGE, say: \n    'remember something for me'" << std::endl;
+  std::cout << "\n  TO REMOVE AN ANSWER, say: \n    'forget that last answer'" << std::endl;
+  std::cout << "\n  TO EXIT, say: \n    'goodbye'" << std::endl;
+  std::cout << "\n  -----------------------------------------" << std::endl;
+  std::cout << "  -----------------------------------------\n\n" << std::endl;
+
+  std::string first_name_capitalized = capitalize(first_name);
+  std::string bot_nametag = "  MEMORY BOT: ";
+  memory_file_name = "memory_bot.json";
+
+  greeting_strings = {
+    "Hello " + first_name_capitalized + ", how can I be of service?", 
+    "Hi " + first_name_capitalized + ", what's on your mind?",
+    "Glad to see you " + first_name_capitalized + ", what can I help you with today?", 
+    "Hi " + first_name_capitalized + ", how can I be of service?",
+    "Hi " + first_name_capitalized + ", ask me anything and I'll answer as best I can.", 
+    "It's good to see you, " + first_name_capitalized + ".  Ask me anything and I'll answer as best I can.", 
+    "Welcome, " + first_name_capitalized + ".  Ask me anything and I'll answer as best I can."
+  };
+
+  unsure_of_answer_strings = {
+    "I'm sorrry, I don't recall.", 
+    "Sorry " + first_name_capitalized + ", I don't recall.", 
+    "Apologies, " + first_name_capitalized + ".  I'm entirely not sure.", 
+    "As the Colombians say, lo que le digo es mentira.  My only answer would be a lie.  In other words, I am unsure.", 
+    "I don't have and answer for that.", 
+    "I'm not sure.", 
+    "I don't know, but I would love to learn.", 
+    ""
+  };
+
+  goodbye_strings = {
+    "It has been a pleasure speaking with you.", 
+    "I hope that I have been of service.  Goodbye for now.",
+    "Farewell for now.",
+    "Goodbye for now.",
+    "I hope to see you soon.",
+    // ** Note for collaborators **
+    // If the conversation has been going on for a while, the phrase ("i enjoyed this conversation") 
+    // makes it feel like the program is able to detect the characteristics of a good conversation. 
+    // If the user has only asked one or two questions, the phrase comes off as comically sarcastic. 
+    // The use of phrases with meanings which depend on the situation is a great way to make the 
+    // program's responses seem more organic and deep'.
+    "I enjoyed this conversation."
+  };
+
+  int random_greeting_index = randomIndex(greeting_strings);
+
+  std::cout << bot_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
+
+  InvertedIndex index;
+  std::string current_question;
+  std::string answer;
+  bool question_found = false;
+
+  index.loadFromJson(memory_file_name);
+
+  while (true) {
+
+    std::cin >> current_question;
+    
+    // If the word "goodbye" is in user input,
+    if (a_is_in_b("goodbye", current_question) == true) 
+    {
+
+      int random_goodbye_index = randomIndex(goodbye_strings);
+      
+      // Say goodbye to the user and return to the main menu.
+      std::cout << "\n -----------------------------------------" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
+      std::cout << "\n" + bot_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
+      std::cout << " -----------------------------------------" << std::endl;
+      return;
+
+      // Otherwise,
+    } 
+    else 
+    {
+
+      std::string current_question;
+      std::getline(std::cin, current_question);
+
+      int random_unsure_index = randomIndex(unsure_of_answer_strings);
+
+      std::string unsure_string =  unsure_of_answer_strings[random_unsure_index];
+
+      std::string answer = index.findBestMatch(current_question, unsure_string);
+
+      std::cout << "\n" + bot_nametag + answer << std::endl << std::endl << user_nametag;
+      continue;
+
+    }
+
+  }
+
+  index.saveToJson(memory_file_name);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +217,7 @@ void Rememberer::talkToDeadPeople()
       };
 
       goodbye_strings = {
-        "Then go, and remember what I have said.", 
+        "Go and remember what I have said.", 
         "Leave me now. I will return to my waiting.",
         "Our time fades, as all things do.",
         "Walk carefully, wherever you dwell.",
@@ -247,7 +232,7 @@ void Rememberer::talkToDeadPeople()
       memory_file_name = "people/grkb.json";
 
       greeting_strings = {
-        "I am strong Grkb.  Grkb land from green mountain to dirty river.", 
+        "I am strong Grkb.  Grkb land from green mountain to wide river.", 
         "Grkb is strong.", 
         "Tell old woman from red mountain cave to give back spear.  If not I find her.", 
         "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
@@ -369,37 +354,146 @@ void Rememberer::talkToDeadPeople()
   index.saveToJson(memory_file_name);
 }
 
-void Rememberer::conversation() 
+int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
-  int user_activity_choice;
-  while(true) 
+  int random_index;
+
+    // Seed the random number generator
+    std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
+
+    // Check if the vector is not empty to avoid errors
+    if (!input_vector.empty()) {
+        // Create a distribution for indices
+        std::uniform_int_distribution<int> dist(0, input_vector.size() - 1);
+
+        // Generate a random index
+        random_index = dist(rng);
+    } 
+
+    return random_index;
+}
+
+// This function acts identically to the word 'in' in Python.  It checks
+// if a string contains a substring (if string_a is in string_b).
+bool Rememberer::a_is_in_b(std::string string_a, std::string string_b) 
+{
+  size_t found = string_b.find(string_a);
+
+  if (found != std::string::npos) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+std::string Rememberer::capitalize(std:: string str) 
+{
+  
+  // Return an empty string if the uinput string is empty.
+  if (str.empty()) 
   {
-    std::cout << "\n  WHAT WOULD YOU LIKE TO DO?  \n" << std::endl;
-    std::cout << "    1. Startup MemoryBot" << std::endl;
-    std::cout << "    2. Talk to dead people" << std::endl;
-    std::cout << "    3. Exit" << std::endl; 
-    std::cout << "\n  Please enter 1, 2, or 3 to make your selection.  \n" << std::endl;
+    return ""; 
+  }
 
-    std::cin >> user_activity_choice;
+  // Create a copy of the parameter for modification.
+  std::string result = str; 
 
-    switch (user_activity_choice) 
-    {
-      case 1:
-        memoryBotConversation();
-        break;
+  // Capitalize the first character of the copied parameter string.
+  result[0] = std::toupper(result[0]);
 
-      case 2:  
-        talkToDeadPeople();
-        break;
+  // Convert all subsequent characters to lowercase.
+  for (size_t i = 1; i < result.length(); ++i) 
+  {
+      result[i] = std::tolower(result[i]);
+  }
 
-      case 3:
-        std::cout << "\n  Goodbye.  \n" << std::endl;
-        exit(0);
+  return result;
+}
 
-      default:
-        std::cout << "\n  Please try again using only the option number with no additional characters.\n" << std::endl;
-        std::cout << "  Enter 1 to startup MemoryBot, 2 to talk to dead people, or 3 to exit.\n" << std::endl;
-    }
+//////////////////////////////////////////////////////////////////////////
+//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// This method acts identically to Python's split() function.  It takes a  
+// string and creates a vector where each word in the string is an item  
+// in the vector.
+std::vector<std::string> Rememberer::split(std::string& str) 
+{
+  std::vector<std::string> words;
+  std::stringstream ss(str);
+  std::string word;
+  while (std::getline(ss, word, ' ')) {
+    words.push_back(word);
+  }
+  return words;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// This function acts identically to Python's upper() function.  It turns 
+// all of a string's characters to uppercase.
+
+// this line is modified (there was a const here for the string which threw 
+// an error)
+std::string Rememberer::upper(std::string& str) 
+{
+  // this line is unchanged from google ai
+  std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+  // HERE, a line was omitted.
+  // this next line was added by me, what was there originally (return 0) 
+  // threw an error since the function was written by the AI as a 
+  // main function (type int)
+  return str;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// This function acts identically to Python's upper() function.  It turns 
+// all of a string's characters to uppercase.
+
+// THIS IS NOTHING MORE THAN THE INVERSE OF THE ABOVE FUNTION
+// this line is modified (there was a const here for the string which threw 
+// an error)
+std::string Rememberer::lower(std::string& str) 
+{
+  // this line is unchanged from google ai
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  // HERE, a line was omitted.
+  // this next line was added by me, what was there originally (return 0) 
+  // threw an error since the function was written by the AI as a 
+  // main function (type int)
+  return str;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+// SECURITY FUNTIONS 
+// The following functions enhance system security: 
+//////////////// FIXME: Make this function validate user input length ///
+bool Rememberer::limitStringLength(std::string str) 
+{
+  if (str == str) {
+    return true;
+  }
+  else {
+    return false;
+
   }
 }
 

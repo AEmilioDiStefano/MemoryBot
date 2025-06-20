@@ -37,6 +37,8 @@ public:
   std::vector<std::string> readlines(std::string& file_name);
 
   bool a_is_in_b(std::string sub_string, std::string full_string);
+
+  int randomIndex(std::vector<std::string> input_vector);
   
   std::string entity_nametag;
   std::string user_nametag;
