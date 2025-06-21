@@ -9,7 +9,6 @@
 #include "Rememberer.h"
 #include "InvertedIndex.h"
 
-// FIXME: Finish the main function.
 int main() {
   Rememberer rememberer;
 

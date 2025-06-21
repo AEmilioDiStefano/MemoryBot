@@ -1,3 +1,19 @@
+//////////////////////////////////////////////////////////////////////////////
+///                                                                         //
+///   CLASS NAME: Rememberer                                                //
+///      VERSION: 1.0                                                       //
+///         DATE: June 21, 2025                                             //
+///    DEVELOPER: Andrew Emilio DiStefano                                   //
+///                                                                         //
+///  DESCRIPTION: The functions included in the Rememberer class set up     //
+///  the conversation loop logic for this program.  All functions are       //
+///  modularized and reusable.  Extensive security measures address the     //
+///  fact that this is the part of the system which will be bombarded       //
+///  with user input.  All input is validated and sanitized before it       //
+///   enters the system.                                                    //
+///                                                                         //
+//////////////////////////////////////////////////////////////////////////////
+
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -44,7 +60,7 @@ void Rememberer::introduction()
 void Rememberer::conversation() 
 {
 
-  // 
+  // This loop is our main menu.
   unsigned int user_activity_choice;
   while(true) 
   {
@@ -59,6 +75,8 @@ void Rememberer::conversation()
     std::cout << "\n    0. Exit" << std::endl; 
     std::cout << "\n  Please enter 1, 2, 3, or 0 to make your selection.  \n" << std::endl;
 
+    // This is a custom input function written to keep strings safe
+    // in the ocntext of the behavior of the program.
     user_activity_choice = getSafeIntInput();
 
     switch (user_activity_choice) 
@@ -87,6 +105,9 @@ void Rememberer::conversation()
         exit(0);
       }
 
+      // There are already several measures here to address invalid input,
+      // this acts as a catch-all for cases which may not be detected for 
+      // some obscure reason.
       default:
       {
         std::cout << "\n  Please try again using only the option number with no additional characters.\n" << std::endl;
@@ -96,14 +117,17 @@ void Rememberer::conversation()
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
+ * This function defines the logic behind conversations with MemoryBot.
+ */
 void Rememberer::memoryBotConversation() 
 {
-
   std::string first_name_capitalized = capitalize(first_name);
+
+  // Based on user input, define a series of strings and 
+    // string vectors which will be used forfor 'hello', 
+    // 'goodbye', and 'I dont know' answers during 
+    // conversations with MemoryBot.
 
   std::string entity_nametag = "  MEMORY BOT: ";
   memory_file_name = "memory_bot.json";
@@ -144,7 +168,6 @@ void Rememberer::memoryBotConversation()
     "I enjoyed this conversation."
   };
 
-
     std::cout << "\n  -----------------------------------------" << std::endl;
     std::cout << "  -----------------------------------------" << std::endl;
     std::cout << "\n  MEMORY BOT HAS BEEN INITIATED" << std::endl;
@@ -152,10 +175,13 @@ void Rememberer::memoryBotConversation()
     std::cout << "\n  -----------------------------------------" << std::endl;
     std::cout << "  -----------------------------------------\n\n" << std::endl;
 
+    // Output a random element from the greeting_strings index.
     unsigned int random_greeting_index = randomIndex(greeting_strings);
-
     std::cout << entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
 
+    // This function takes the parameters below 
+    // and arranges them into a conversation 
+    // with MemoryBot.
     invertedIndexConversationLoop(
     entity_nametag, 
     memory_file_name, 
@@ -164,6 +190,8 @@ void Rememberer::memoryBotConversation()
     goodbye_strings);
 }
 
+// This function deifnes the functionality of the 
+// 'talk to dead people' feature.
 void Rememberer::talkToDeadPeople()
 {
   while(true) {
@@ -191,6 +219,10 @@ void Rememberer::talkToDeadPeople()
 
     unsigned int user_entity_choice = getSafeIntInput();
 
+    // Based on user input, define a series of strings and 
+    // string vectors which will be used forfor 'hello', 
+    // 'goodbye', and 'I dont know' answers during 
+    // conversations with MemoryBot.
     switch (user_entity_choice) {
       
       case 1483:
@@ -311,6 +343,9 @@ void Rememberer::talkToDeadPeople()
         return;
       }
 
+      // There are already several measures here to address invalid input,
+      // this acts as a catch-all for cases which may not be detected for 
+      // some obscure reason.
       default:
       {
         std::cout << "\n  Your input did not match any of the listed entities.\n  Please try again using only the entity number with no additional characters.\n" << std::endl;
@@ -318,6 +353,7 @@ void Rememberer::talkToDeadPeople()
       }
     }  
 
+    // This ominous message is meant to add to the user experience.
     std::cout << "\n -----------------------------------------" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
     std::cout << "\n  **  " + entity_full_name + " is present.  **" << std::endl;
@@ -365,10 +401,8 @@ void Rememberer::invertedIndexConversationLoop(
     // If the word "goodbye" is in user input,
     if (a_is_in_b("goodbye", current_question) == true) 
     {
-
+      // then say goodbye to the user.
       unsigned int random_goodbye_index = randomIndex(goodbye_strings);
-      
-      // Say goodbye to the user and return to the main menu.
       std::cout << "\n -----------------------------------------" << std::endl;
       std::cout << " -----------------------------------------" << std::endl;
       std::cout << "\n" + entity_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
@@ -379,14 +413,12 @@ void Rememberer::invertedIndexConversationLoop(
     } 
     else
     {
-      
-
+      // Use the findBestMatch() function from the InvertedIndex class
+      // (using the linear merge count algorithm) to find the best 
+      // answer for the user's question based on word matches.
       unsigned int random_unsure_index = randomIndex(unsure_of_answer_strings);
-
       std::string unsure_string =  unsure_of_answer_strings[random_unsure_index];
-
       std::string answer = index.findBestMatch(current_question, unsure_string);
-
       std::cout << "\n" + entity_nametag + answer << std::endl << std::endl << user_nametag;
       continue;
     }
@@ -395,8 +427,13 @@ void Rememberer::invertedIndexConversationLoop(
   index.saveToJson(memory_file_name);
 }
 
+/*
+ * This function defines the behavior of the conversation loop 
+ * used to add data to MemoryBoy's brain file.
+ */
 void Rememberer::addKnowledge(const std::string& filename)
 {
+  // Use the nlohmann library to load a JSON file.
   json j = loadExistingJSON(filename);
 
   std::string question, answer, choice;
@@ -407,7 +444,7 @@ void Rememberer::addKnowledge(const std::string& filename)
   std::cout << "  SAY 'nevermind' or enter '0' at any time \n  to stop editing WITHOUT making changes" << std::endl;
 
   do {
-      // Loop until a non-duplicate question is entered
+      // Loop until a non-duplicate question is entered.
       while (true) {
         
         std::cout << "\n  Enter the QUESTION to remember an answer for: \n" << std::endl;
@@ -415,14 +452,17 @@ void Rememberer::addKnowledge(const std::string& filename)
 
         std::string prepared_question = prepareForFile(question);
 
+        // If the word 'nevermind' appears in user input,
+        // or if user ionput is equal to '0',
         if (a_is_in_b("nevermind", prepared_question) || prepared_question == "0") 
         {
+          // then take the user back to the main menu.
           std::cout << "\n  * Navigating back to the Main Menu *" << std::endl;
           std::cout << "    NO new information has been saved  \n" << std::endl;
           return;
         }
 
-        // This if statement avoids duplicate key values in our JSON file
+        // This 'if' statement avoids duplicate key values in our JSON file.
         if (j.contains(prepared_question)) 
         {
             std::cout << "\n  That question ALREADY EXISTS. Please enter a new one.  \n" << std::endl;
@@ -444,6 +484,7 @@ void Rememberer::addKnowledge(const std::string& filename)
         }
       }
 
+      // Show the user which question-answer pairs will be stored to the JSON file.
       std::cout << "\n  The following question-answer pair will be stored to MemoryBot's brain file: \n" << std::endl;
       std::cout << "  QUESTION: " + question << std::endl;
       std::cout << "    ANSWER: " + answer << std::endl;
@@ -453,21 +494,22 @@ void Rememberer::addKnowledge(const std::string& filename)
 
   } while (choice == "yes" || choice == "Yes" || choice == "YES");
 
-  // Save updated JSON
+  // Save the updates to the JSON file.
   std::ofstream file(filename);
   if (!file) {
       std::cerr << "\n  Error opening file for writing to the file: " << filename + "\n   Make sure that your JSON file is in the right location.  \n" << std::endl;
       return;
   }
 
-  file << j.dump(4); // Pretty-printed JSON
+  // Format the question-answer pair for the JSON file.
+  file << j.dump(4); 
   file.close();
 
   std::cout << "\n  Updated question-answer pairs have been saved to " << filename  + "\n" << std::endl;
 }
 
 /**
- * Loads existing JSON from file if it exists, or returns an empty JSON object.
+ * THis function loads existing JSON from file if it exists, or returns an empty JSON object.
  */
 json Rememberer::loadExistingJSON(const std::string& filename) 
 {
@@ -486,17 +528,20 @@ json Rememberer::loadExistingJSON(const std::string& filename)
     return existing;
 }
 
-
+/*
+ * This function defines the randomization of vector indices used 
+ * to randomize system behavior for an organic conversation.
+ */
 unsigned int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
   unsigned int random_index;
 
-    // Seed the random number generator
+    // Seed the random number generator.
     std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
 
-    // Check if the vector is not empty to avoid errors
+    // Check if the vector is not empty to avoid errors.
     if (!input_vector.empty()) {
-        // Create a distribution for indices
+        // Create a distribution for indices.
         std::uniform_int_distribution<int> dist(0, input_vector.size() - 1);
 
         // Generate a random index
@@ -543,10 +588,6 @@ std::string Rememberer::capitalize(std:: string str)
   return result;
 }
 
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
 // This method acts identically to Python's split() function.  It takes a  
 // string and creates a vector where each word in the string is an item  
 // in the vector.
@@ -561,54 +602,19 @@ std::vector<std::string> Rememberer::split(std::string& str)
   return words;
 }
 
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
 // This function acts identically to Python's upper() function.  It turns 
 // all of a string's characters to uppercase.
-
-// this line is modified (there was a const here for the string which threw 
-// an error)
 std::string Rememberer::upper(std::string& str) 
 {
-  // this line is unchanged from google ai
   std::transform(str.begin(), str.end(), str.begin(), ::toupper);
-  // HERE, a line was omitted.
-  // this next line was added by me, what was there originally (return 0) 
-  // threw an error since the function was written by the AI as a 
-  // main function (type int)
   return str;
 }
 
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////
-//////////////// FIXME: CITE GOOGLE AI FOR THIS FUNCTION /////////////////
-//////////////////////////////////////////////////////////////////////////
-
 // This function acts identically to Python's upper() function.  It turns 
 // all of a string's characters to uppercase.
-
-// THIS IS NOTHING MORE THAN THE INVERSE OF THE ABOVE FUNTION
-// this line is modified (there was a const here for the string which threw 
-// an error)
 std::string Rememberer::lower(std::string& str) 
 {
-  // this line is unchanged from google ai
   std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  // HERE, a line was omitted.
-  // this next line was added by me, what was there originally (return 0) 
-  // threw an error since the function was written by the AI as a 
-  // main function (type int)
   return str;
 }
 
@@ -625,91 +631,74 @@ std::string Rememberer::prepareForFile(const std::string& input)
     return output;
 }
 
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-//   _____                      _ _             
-//  / ____|                    (_) |            
-// | (___   ___  ___ _   _ _ __ _| |_ _   _     
-//  \___ \ / _ \/ __| | | | '__| | __| | | |    
-//  ____) |  __/ (__| |_| | |  | | |_| |_| |    
-// |_____/ \___|\___|\__,_|_| _|_|\__|\__, |    
-// |  ____|              | | (_)       __/ |    
-// | |__ _   _ _ __   ___| |_ _  ___  |___/ ___ 
-// |  __| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
-// | |  | |_| | | | | (__| |_| | (_) | | | \__ \
-// |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
-
-/////  ____  ______ _____ _____ _   _ 
-///// |  _ \|  ____/ ____|_   _| \ | |
-///// | |_) | |__ | |  __  | | |  \| |
-///// |  _ <|  __|| | |_ | | | | . ` |
-///// | |_) | |___| |__| |_| |_| |\  |
-///// |____/|______\_____|_____|_| \_|
-/////                               
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-///  ______ _   _ _____  
-/// |  ____| \ | |  __ \ 
-/// | |__  |  \| | |  | |
-/// |  __| | . ` | |  | |
-/// | |____| |\  | |__| |
-/// |______|_| \_|_____/ 
-//\\ 
-
+/*
+ * This security function puts the cinIntTypeValidation and 
+ * cinIntSizeValidation functions into one custom input 
+ * sanitization and validation function for int variables.
+ */
 int Rememberer::getSafeIntInput() {
     int value;
     while (true) {
-        if (!cinIntTypeValidation(value)) {
-            std::cout << "\n  Invalid input type. Please enter a valid integer.\n\n" + user_nametag;
-            continue;
-        }
+      // If the conditions are not met, 
+      if (!cinIntTypeValidation(value)) {
+        // then do not store the user input.
+          std::cout << "\n  Invalid input type. Please enter a valid integer.\n\n" + user_nametag;
+          continue;
+      }
 
-        if (!cinIntSizeValidation(value)) {
-            std::cout << "\n  Integer out of range. Must be between 0 and 10,000.\n\n" + user_nametag;
-            continue;
-        }
-
-        return value;
+      if (!cinIntSizeValidation(value)) {
+          
+        std::cout << "\n  Integer out of range. Must be between 0 and 10,000.\n\n" + user_nametag;
+        continue;
+      }
+      return value;
     }
 }
 
+/*
+ * This security function puts the stringSanitization and 
+ * cinStringSizeValidation functions into one custom input 
+ * sanitization and validation function for int variables.
+ */
 std::string Rememberer::getSafeStringInput(size_t max_length) {
-    std::string input;
-    while (true) {
+  std::string input;
+  // If the conditions are not met, then do not store the value 
+  // and continue prompting the user for input.
+  while (true) {
 
-        input = cinStringSizeValidation(max_length);
+      input = cinStringSizeValidation(max_length);
+      input = stringSanitization(input);
 
-        input = stringSanitization(input);
+      if (input.empty()) {
+          std::cout << "Input was completely sanitized. Please try again.\n";
+          continue;
+      }
 
-        if (input.empty()) {
-            std::cout << "Input was completely sanitized. Please try again.\n";
-            continue;
-        }
-
-        return input;
+      return input;
     }
 }
 
+/*
+ * This function omits potentially dangerous characters 
+ * from user input.
+ */
 std::string Rememberer::stringSanitization(const std::string& input) {
-    std::string sanitized;
-    const std::string unsafe = "<>\"';&$@#-_+,.?|\\/()`=*%^";
+  std::string sanitized;
+  const std::string unsafe = "<>\"';&$@#-_+,.?|\\/()`=*%^";
 
-    for (char ch : input) {
-        if (unsafe.find(ch) == std::string::npos && std::isprint(static_cast<unsigned char>(ch))) {
-            sanitized += ch;
-        }
-    }
+  for (char ch : input) {
+      if (unsafe.find(ch) == std::string::npos && std::isprint(static_cast<unsigned char>(ch))) {
+          sanitized += ch;
+      }
+  }
 
-    return sanitized;
+  return sanitized;
 }
 
+/* 
+ * This function assures that values passed into 'int' variables 
+ * are indeed of type 'int'.
+*/
 bool Rememberer::cinIntTypeValidation(int &outInt) {
     std::string line;
     std::getline(std::cin, line);
@@ -720,6 +709,10 @@ bool Rememberer::cinIntTypeValidation(int &outInt) {
     return false;
 }
 
+/*
+ * This function limits the size of strings before they are saved
+ * as user input.
+ */
 std::string Rememberer::cinStringSizeValidation(size_t max_len) {
     std::string input;
     char ch;
@@ -730,7 +723,7 @@ std::string Rememberer::cinStringSizeValidation(size_t max_len) {
         }
     }
 
-    // Get rid of all characters beyond the set point (mad length)
+    // Get rid of all characters beyond the set point (max length).
     if (ch != '\n') {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -738,8 +731,10 @@ std::string Rememberer::cinStringSizeValidation(size_t max_len) {
     return input;
 }
 
-// This is where we ultimately set the maximum number of characters
-// for user input strings.
+/*
+ * This function allows the user to set the
+ * maximum number of characters in a string.
+ */  
 bool Rememberer::cinIntSizeValidation(int value) {
     return value >= 0 && value <= 10000;
 }

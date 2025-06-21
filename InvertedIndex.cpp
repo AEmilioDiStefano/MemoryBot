@@ -1,3 +1,17 @@
+//////////////////////////////////////////////////////////////////////////////
+///                                                                         //
+///   CLASS NAME: InvertedIndex                                             //
+///      VERSION: 1.0                                                       //
+///         DATE: June 21, 2025                                             //
+///    DEVELOPER: Andrew Emilio DiStefano                                   //
+///                                                                         //
+///  DESCRIPTION: The functions included in the InvertedIndex class allow   //
+///  this program to search through large data sets for a desired string    //
+///  based on string input.  This logic is what powers many popular search  //
+///  engines at the time of writing.                                        //
+///                                                                         //
+//////////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -10,7 +24,9 @@
 // This library helps us to perform CRUD operations on our JSON files.
 using json = nlohmann::json;
 
-// This function breaks each string down into individual words (or tokens).
+/*
+ * This function breaks each string down into individual words (or tokens).
+ */ 
 std::vector<std::string> InvertedIndex::tokenize(const std::string& text) 
 {
     // This instream object will process user input strings.
@@ -32,7 +48,9 @@ std::vector<std::string> InvertedIndex::tokenize(const std::string& text)
     return tokens;
 }
 
-// This function indexes a new question to the inverted index.
+/*
+ * THis function indexes questions (tokens) to the inverted index.
+ */
 void InvertedIndex::indexQuestion(const std::string& question) 
 {
     for (const auto& word : tokenize(question)) 
@@ -41,28 +59,9 @@ void InvertedIndex::indexQuestion(const std::string& question)
     }
 }
 
-void InvertedIndex::removeQuestionFromIndex(const std::string& question) 
-{
-    // For each word (token) in each entry, 
-    for (const auto& word : tokenize(question)) 
-    {
-        // search for a word in common with the question and the answer (*)
-        if (invertedIndex[word].count(question)) 
-        {
-            // if one is not found, then get rid of the question. (*)
-            invertedIndex[word].erase(question);
-
-            // If there is no instance of the word in the invrerted index,
-            if (invertedIndex[word].empty()) 
-            {
-                // then get rid of the word. (*)
-                invertedIndex.erase(word);
-            }
-        }
-    }
-}
-
-// This function loads data into the inverted index from a JSON file.
+/*
+ * This function loads data into the inverted index from a JSON file.
+ */
 void InvertedIndex::loadFromJson(const std::string& filename) {
     std::ifstream inFile(filename);
     // If the file is not opened succesfully,
@@ -83,8 +82,10 @@ void InvertedIndex::loadFromJson(const std::string& filename) {
     }
 }
 
-// This function saves all information in the question/answer 
-// unordered map into our JSON file.
+/*
+ * This function saves all information in the question/answer 
+ * unordered map into our JSON file.
+ */
 void InvertedIndex::saveToJson(const std::string& filename) 
 {
     json j;
@@ -102,7 +103,9 @@ void InvertedIndex::saveToJson(const std::string& filename)
     outFile << j.dump(4);
 }
 
-// This function adds a question-answer (key-value) pair to our inverted index.
+/*
+ * This function adds a question-answer (key-value) pair to our inverted index.
+ */ 
 void InvertedIndex::addEntry(const std::string& question, const std::string& answer) {
     if (qaMap.find(question) == qaMap.end()) 
     {
@@ -111,7 +114,9 @@ void InvertedIndex::addEntry(const std::string& question, const std::string& ans
     }
 }
 
-// This function removes a question-answer (key-value) pair to our inverted index.
+/*
+ * This function removes a question-answer (key-value) pair to our inverted index.
+ */
 void InvertedIndex::removeEntry(const std::string& question) {
     if (qaMap.find(question) != qaMap.end()) 
     {
@@ -120,8 +125,15 @@ void InvertedIndex::removeEntry(const std::string& question) {
     }
 }
 
+/*
+ * This function defines the behavior of the Linear Merge Count sorting algorithm
+ * which makes this system so efficient at searching large data sets of 
+ * question-answer pairs for the best possible match.
+ */
 int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b) {
-        int i = 0, j = 0, count = 0;
+    // Shared tokens within user input strings and saved answer keys are 
+    // kept track of via a two-dimensional grid made from two vectors.   
+    int i = 0, j = 0, count = 0;
         while (i < a.size() && j < b.size()) 
         {
             if (a[i] == b[j]) 
@@ -142,19 +154,26 @@ int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std
         return count;
     }
 
-// This is the function that searches our inverted index for the question string 
-// that has the most tokens (words) in common with the input. 
+/*
+ * This is the function that searches our inverted index for the question string 
+ * which has most tokens (words) in common with the user input question.
+ */
 std::string InvertedIndex::findBestMatch(const std::string& input_question, std::string not_found_string) {
     Rememberer rememberer;
 
+    // Tokenize the input question into a vector of token (word) elements.
     auto input_tokens = tokenize(input_question);
+
+    // Sort through these tokens comparing for common tokens (words).
     std::sort(input_tokens.begin(), input_tokens.end());
 
+    // The best match is the question (key) with the most tokens (words)
+    // shared with the user input string.
     std::string best_match;
     int best_score = 0;
 
+    // For each question-answer pair in our map of questions and answers,
     for (const auto& [question, answer] : qaMap) {
-
         auto question_tokens = tokenize(question);
         std::sort(question_tokens.begin(), question_tokens.end());
         int score = linearMergeCount(input_tokens, question_tokens);
@@ -165,12 +184,16 @@ std::string InvertedIndex::findBestMatch(const std::string& input_question, std:
         }
     }
 
+    // If there are matches, return the best match.
     if (!best_match.empty()) 
     {
         return qaMap.at(best_match);
     } 
+
+    // If there are no matches, 
     else 
     {
+        // then note that the string was not found.
         return not_found_string;
     }
 }
