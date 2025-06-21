@@ -41,15 +41,13 @@ public:
 
   bool a_is_in_b(std::string sub_string, std::string full_string);
 
-  int randomIndex(std::vector<std::string> input_vector);
+  unsigned int randomIndex(std::vector<std::string> input_vector);
 
   void invertedIndexConversationLoop(std::string entity_nametag, std::string memory_file_name, std::vector<std::string> greeting_strings, std::vector<std::string> unsure_of_answer_strings, std::vector<std::string> goodbye_strings);
   
   void addKnowledge(const std::string& filename);
 
   json loadExistingJSON(const std::string& filename);
-
-  std::string sanitize(const std::string& input);
   
   std::string entity_nametag;
   std::string user_nametag;
@@ -64,12 +62,9 @@ private:
   std::string first_name; 
   std::string first_name_upper;
   
-  // Security Functions:
-  
-  // This function limits the number of characters in user input 
-  // strings in order to prevent overflow attacks involving  
-  // excessiveuser input.
-  bool limitStringLength(std::string str);
+// Security Functions:
+
+  std::string sanitize(const std::string& input);
 
 };
 

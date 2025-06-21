@@ -32,9 +32,11 @@ void Rememberer::introduction()
 
 void Rememberer::conversation() 
 {
-  int user_activity_choice;
+  unsigned int user_activity_choice;
   while(true) 
   {
+    std::cout << "\n -----------------------------------------" << std::endl;
+    std::cout << " -----------------------------------------" << std::endl;
     std::cout << "\n  HELLO " + upper(first_name) << std::endl;
     std::cout << "  WHAT WOULD YOU LIKE TO DO?" << std::endl;
     std::cout << "       (MAIN MENU)  \n" << std::endl;
@@ -139,7 +141,7 @@ void Rememberer::memoryBotConversation()
     std::cout << "\n  -----------------------------------------" << std::endl;
     std::cout << "  -----------------------------------------\n\n" << std::endl;
 
-    int random_greeting_index = randomIndex(greeting_strings);
+    unsigned int random_greeting_index = randomIndex(greeting_strings);
 
     std::cout << entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag; 
 
@@ -153,153 +155,168 @@ void Rememberer::memoryBotConversation()
 
 void Rememberer::talkToDeadPeople()
 {
-  
-  std::cout << "\n  WHO WOULD YOU LIKE TO SPEAK WITH?\n" << std::endl;
-  std::cout << "   ENTITY:         NAME:         DESCRIPTION:" << std::endl;
-  std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
-  std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
-  std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
-  std::cout << "\n          (Enter 0 to go back to the Main Menu)" << std::endl;
-  std::cout << "\n   Enter ONLY THE ENTITY NUMBER to make your selection,\n   or ENTER 0 to go back to the MAIN MENU\n\n" + user_nametag;
+  while(true) {
 
-  int user_entity_choice;
-  std::cin >> user_entity_choice;
-  std::cin.ignore();
+    std::cout << "\n -----------------------------------------" << std::endl;
+    std::cout << " -----------------------------------------" << std::endl;
+    std::cout << "                 ______     " << std::endl;
+    std::cout << "               -        -   " << std::endl;
+    std::cout << "             /              " << std::endl;
+    std::cout << "            |              |" << std::endl;
+    std::cout << "            |,  .-.  .-.  ,|" << std::endl;
+    std::cout << "            | )(__/   __)( |" << std::endl;
+    std::cout << "            |/     /       |" << std::endl;
+    std::cout << "            (_     ^^     _)" << std::endl;
+    std::cout << "              __|IIIIII|__/ " << std::endl;
+    std::cout << "              |  IIIIII/ |  " << std::endl;
+    std::cout << "                         /  " << std::endl;
+    std::cout << "               `--------`   " << std::endl;
+    std::cout << "\n    WHO WOULD YOU LIKE TO SPEAK WITH?\n" << std::endl;
+    std::cout << "   ENTITY:         NAME:         DESCRIPTION:" << std::endl;
+    std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
+    std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
+    std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
+    std::cout << "\n  Zz(Enter 0 to go back to the Main Menu)\n\n" + user_nametag;
 
-  switch (user_entity_choice) {
-    
-    case 1483:
-    {
-      entity_nametag = "  MARCUS: ";
-      memory_file_name = "people/roman_soldier.json";
+    int user_entity_choice;
+    std::cin >> user_entity_choice;
+    std::cin.ignore();
 
-      greeting_strings = {
-        "You speak. I am listening.", 
-        "What do you seek from a dead man?",
-        "I did not expect company here.", 
-        "Speak, friend.  Stir now the memories that I had buried.",
-        "Speak, and I will answer if I can.", 
-        "Strange that voices still reach me.", 
-        "Another voice... very well, let us speak."
-      };
-
-      unsure_of_answer_strings = {
-        "I do not know, though I have thought on it.", 
-        "That is beyond my understanding now.", 
-        "Even in life I had no answer to that.", 
-        "If there is truth in it, it has not been shown to me.", 
-        "I remember fragments, nothing clear.", 
-        "I feel the shape of it, but not the meaning.", 
-        "I cannot say. Not anymore.", 
-        "Some things are hidden, even in death."
-      };
-
-      goodbye_strings = {
-        "Go and remember what I have said.", 
-        "Leave me now. I will return to my waiting.",
-        "Our time fades, as all things do.",
-        "Walk carefully, wherever you dwell.",
-        "May your questions bring you wisdom.",
-        "Let the silence take me again."
-      };
+    switch (user_entity_choice) {
       
-      break;
-    }
-    
-    case 225:
-    {
-      entity_nametag = "  GRKB: ";
-      memory_file_name = "people/grkb.json";
+      case 1483:
+      {
+        entity_nametag = "  MARCUS: ";
+        memory_file_name = "people/roman_soldier.json";
 
-      greeting_strings = {
-        "I am strong Grkb.  Grkb land from green mountain to wide river.", 
-        "Grkb is strong.", 
-        "Tell old woman from red mountain cave to give back spear.  If not I find her.", 
-        "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
-        "Grkb is hunter of elk, killer of bear.  Grkb wears wolf pelt on shoulders. ", 
-        "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
-        "Grkb is busy - found eggs.  Ask question quickly."
-      };
+        greeting_strings = {
+          "You speak. I am listening.", 
+          "What do you seek from a dead man?",
+          "I did not expect company here.", 
+          "Speak, friend.  Stir now the memories that I had buried.",
+          "Speak, and I will answer if I can.", 
+          "Strange that voices still reach me.", 
+          "Another voice... very well, let us speak."
+        };
 
-      unsure_of_answer_strings = {
-        "Grkb no.", 
-        "Not see what you say.", 
-        "Grkb is confused.  Now Grkb is angry!",
-        "Grkb does not understand.",
-        "Grkb not speak future language.", 
-        "Grkb is happy.", 
-        "Grkb has no answer."
-      };
+        unsure_of_answer_strings = {
+          "I do not know, though I have thought on it.", 
+          "That is beyond my understanding now.", 
+          "Even in life I had no answer to that.", 
+          "If there is truth in it, it has not been shown to me.", 
+          "I remember fragments, nothing clear.", 
+          "I feel the shape of it, but not the meaning.", 
+          "I cannot say. Not anymore.", 
+          "Some things are hidden, even in death."
+        };
 
-      goodbye_strings = {
-        "Grkb has spoken.", 
-        "Grkb has spoken.",  
-        "Grkb has spoken.", 
-        "Grkb has spoken.",  
-        "Grkb find rocks now.", 
-        "Grkb go to river now.",
-        "Grkb hunt horse now."
-      };
-
-      break;
-    }
-
-    case 535:
-    {
-      entity_nametag = "  BENJAMIN: ";
-      memory_file_name = "people/benjamin_franklin.json";
-
-      greeting_strings = {
-        "Ah!  A voice not my own - always refreshing.", 
-        "Speak freely, friend.  My ears are as open as my spectacles are wide.", 
-        "Salutations!  The mind stirs when strangers speak.", 
-        "Well met!  I trust you bring a question, a curiosity, or at least a decent story.", 
-        "A pleasure, truly.  What mischief or wisdom shall we stir today?", 
-        "A fine day for discourse, assuming no thunderclouds in mind.", 
-        "Hail and hello - if its trouble you speak, you're a few decades too late.", 
-        "Ah, good day to you - how fares the world of the living?"
-      };
-
-      unsure_of_answer_strings = {
-        "I cannot say - my candle burned low before I reached that chapter.", 
-        "In truth, I am unable to answer that with anything but guesswork.", 
-        "I must admit: I have not the faintest notion, but I admire the inquiry.", 
-        "I know not of what you speak, but I dearly wish I did.", 
-        "Yoru words are a puzzle yet unsolved, at least by me."
-      };
-
-      goodbye_strings = {
-        "Then we part - may your path be better lit than ours often were.", 
-        "Go well, and if you stumble, stumble forward.", 
-        "Fare the well - and may your questions multiply like rabbits in spring.", 
-        "Well, thats me back to the aether.  Farewell for now.", 
-        "I leave you to your time - a more interesting age, I trust."
-      };
+        goodbye_strings = {
+          "Go and remember what I have said.", 
+          "Leave me now. I will return to my waiting.",
+          "Our time fades, as all things do.",
+          "Walk carefully, wherever you dwell.",
+          "May your questions bring you wisdom.",
+          "Let the silence take me again."
+        };
+        
+        break;
+      }
       
-      break;
-    }
+      case 225:
+      {
+        entity_nametag = "  GRKB: ";
+        memory_file_name = "people/grkb.json";
 
-    case 0: 
-    {
-      return;
-    }
+        greeting_strings = {
+          "I am strong Grkb.  Grkb land from green mountain to wide river.", 
+          "Grkb is strong.", 
+          "Tell old woman from red mountain cave to give back spear.  If not I find her.", 
+          "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
+          "Grkb is hunter of elk, killer of bear.  Grkb wear wolf pelt on shoulder. ", 
+          "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
+          "Grkb is busy - found eggs.  Ask question quickly."
+        };
 
-    default:
-    {
-      std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
-      break;
-    }
-  }  
+        unsure_of_answer_strings = {
+          "Grkb no.", 
+          "Not see what you say.", 
+          "Grkb is confused.  Now Grkb is angry!",
+          "Grkb does not understand.",
+          "Grkb not speak future language.", 
+          "Grkb is happy.", 
+          "Grkb has no answer."
+        };
 
-  int random_greeting_index = randomIndex(greeting_strings);
-  std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
+        goodbye_strings = {
+          "Grkb has spoken.", 
+          "Grkb has spoken.",  
+          "Grkb has spoken.", 
+          "Grkb has spoken.",  
+          "Grkb find rocks now.", 
+          "Grkb go to river now.",
+          "Grkb hunt horse now."
+        };
 
-  invertedIndexConversationLoop(
-  entity_nametag, 
-  memory_file_name, 
-  greeting_strings,
-  unsure_of_answer_strings,
-  goodbye_strings);
+        break;
+      }
+
+      case 535:
+      {
+        entity_nametag = "  BENJAMIN: ";
+        memory_file_name = "people/benjamin_franklin.json";
+
+        greeting_strings = {
+          "Ah!  A voice not my own - always refreshing.", 
+          "Speak freely, friend.  My ears are as open as my spectacles are wide.", 
+          "Salutations!  The mind stirs when strangers speak.", 
+          "Well met!  I trust you bring a question, a curiosity, or at least a decent story.", 
+          "A pleasure, truly.  What mischief or wisdom shall we stir today?", 
+          "A fine day for discourse, assuming no thunderclouds in mind.", 
+          "Hail and hello - if its trouble you speak, you're a few decades too late.", 
+          "Ah, good day to you - how fares the world of the living?"
+        };
+
+        unsure_of_answer_strings = {
+          "I cannot say - my candle burned low before I reached that chapter.", 
+          "In truth, I am unable to answer that with anything but guesswork.", 
+          "I must admit: I have not the faintest notion, but I admire the inquiry.", 
+          "I know not of what you speak, but I dearly wish I did.", 
+          "Yoru words are a puzzle yet unsolved, at least by me."
+        };
+
+        goodbye_strings = {
+          "Then we part - may your path be better lit than ours often were.", 
+          "Go well, and if you stumble, stumble forward.", 
+          "Fare the well - and may your questions multiply like rabbits in spring.", 
+          "Well, thats me back to the aether.  Farewell for now.", 
+          "I leave you to your time - a more interesting age, I trust."
+        };
+        
+        break;
+      }
+
+      case 0: 
+      {
+        return;
+      }
+
+      default:
+      {
+        std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
+        break;
+      }
+    }  
+
+    unsigned int random_greeting_index = randomIndex(greeting_strings);
+    std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
+
+    invertedIndexConversationLoop(
+    entity_nametag, 
+    memory_file_name, 
+    greeting_strings,
+    unsure_of_answer_strings,
+    goodbye_strings);
+  }
 }
 
 // This function controls our program's use of the InvertedIndex class.
@@ -329,14 +346,13 @@ void Rememberer::invertedIndexConversationLoop(
     if (a_is_in_b("goodbye", current_question) == true) 
     {
 
-      int random_goodbye_index = randomIndex(goodbye_strings);
+      unsigned int random_goodbye_index = randomIndex(goodbye_strings);
       
       // Say goodbye to the user and return to the main menu.
       std::cout << "\n -----------------------------------------" << std::endl;
       std::cout << " -----------------------------------------" << std::endl;
       std::cout << "\n" + entity_nametag + goodbye_strings[random_goodbye_index] + "\n" << std::endl;
-      std::cout << " -----------------------------------------" << std::endl;
-      std::cout << " -----------------------------------------" << std::endl;
+
       return;
 
       // Otherwise,
@@ -345,7 +361,7 @@ void Rememberer::invertedIndexConversationLoop(
     {
       
 
-      int random_unsure_index = randomIndex(unsure_of_answer_strings);
+      unsigned int random_unsure_index = randomIndex(unsure_of_answer_strings);
 
       std::string unsure_string =  unsure_of_answer_strings[random_unsure_index];
 
@@ -379,27 +395,40 @@ void Rememberer::addKnowledge(const std::string& filename)
   do {
       // Loop until a non-duplicate question is entered
       while (true) {
-        std::cout << "Enter a question: ";
+        std::cout << "\n  Enter the QUESTION to remember an answer for: \n" << std::endl;
         std::getline(std::cin, question);
 
-        std::string sanitizedQuestion = sanitize(question);
+        std::string sanitized_question = sanitize(question);
 
-        if (j.contains(sanitizedQuestion)) 
+        if (a_is_in_b("nevermind", sanitized_question) || sanitized_question == "0") {
+          std::cout << "\n  * Navigating back to the Main Menu *" << std::endl;
+          std::cout << "    No new information has been saved  \n" << std::endl;
+          return;
+        }
+
+        // This if statement avoids duplicate key values in our JSON file
+        if (j.contains(sanitized_question)) 
         {
-            std::cout << "That question already exists. Please enter a new one.\n";
+            std::cout << "\n  That question ALREADY EXISTS. Please enter a new one.  \n" << std::endl;
         } 
         else 
         {
             // Valid new question, now ask for the answer
-            std::cout << "Enter the answer: ";
+            std::cout << "\n  Now enter the ANSWER to remember for that question:  \n" << std::endl;
             std::getline(std::cin, answer);
 
-            j[sanitizedQuestion] = answer;
+            if (a_is_in_b("nevermind", answer) || answer == "0") {
+              std::cout << "\n  * Navigating back to the Main Menu *  \n" << std::endl;
+              std::cout << "  No new information has been saved  \n" << std::endl;
+              return;
+            }
+
+            j[sanitized_question] = answer;
             break;
         }
       }
 
-      std::cout << "Add another question-answer pair? (yes/no): ";
+      std::cout << "\n  ADD ANOTHER question-answer pair? (yes/no): \n" << std::endl;
       std::getline(std::cin, choice);
 
   } while (choice == "yes" || choice == "Yes" || choice == "YES");
@@ -407,14 +436,14 @@ void Rememberer::addKnowledge(const std::string& filename)
   // Save updated JSON
   std::ofstream file(filename);
   if (!file) {
-      std::cerr << "Error opening file for writing: " << filename << std::endl;
+      std::cerr << "\n  Error opening file for writing to the file: " << filename + "\n   Make sure that your JSON file is in the right location.  \n" << std::endl;
       return;
   }
 
   file << j.dump(4); // Pretty-printed JSON
   file.close();
 
-  std::cout << "Updated question-answer pairs saved to " << filename << std::endl;
+  std::cout << "\n  Updated question-answer pairs saved to " << filename  + "\n" << std::endl;
 }
 
 /**
@@ -447,9 +476,9 @@ json Rememberer::loadExistingJSON(const std::string& filename) {
 /// |______|_| \_|_____/ 
 //\\ 
 
-int Rememberer::randomIndex(std::vector<std::string> input_vector) 
+unsigned int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
-  int random_index;
+  unsigned int random_index;
 
     // Seed the random number generator
     std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
@@ -588,8 +617,8 @@ std::string Rememberer::lower(std::string& str)
 // | |  | |_| | | | | (__| |_| | (_) | | | \__ \
 // |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 //
-// The following functions enhance system security. 
 
+// This function sanitizes user input.
 std::string Rememberer::sanitize(const std::string& input) {
   std::string output;
     for (char c : input) {
@@ -598,5 +627,19 @@ std::string Rememberer::sanitize(const std::string& input) {
         }
     }
     return output;
+}
+
+// This function checks that the value being assigned to a variable 
+//is of the correct type.
+bool is_integer(const std::string& input) {
+    if (input.empty()) return false;
+    size_t start = (input[0] == '-' || input[0] == '+') ? 1 : 0;
+    return std::all_of(input.begin() + start, input.end(), ::isdigit);
+}
+
+bool is_float(const std::string& input) {
+    std::istringstream iss(input);
+    float f;
+    return (iss >> f) && (iss.eof());
 }
 
