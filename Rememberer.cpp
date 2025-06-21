@@ -59,8 +59,7 @@ void Rememberer::conversation()
       
       case 2:
       {
-        
-        addKnowledge(memory_file_name);
+        addKnowledge("memory_bot.json");
         break;
       }
 
@@ -392,9 +391,15 @@ void Rememberer::addKnowledge(const std::string& filename)
 
   std::string question, answer, choice;
 
+  std::cout << "\n -----------------------------------------" << std::endl;
+  std::cout << " -----------------------------------------" << std::endl;
+  std::cout << "\n  YOU ARE IN THE BAIN OF MEMORY BOT  \n" << std::endl;
+  std::cout << "  SAY 'nevermind' or enter '0' at any time \n  to stop editing WITHOUT making changes" << std::endl;
+
   do {
       // Loop until a non-duplicate question is entered
       while (true) {
+        
         std::cout << "\n  Enter the QUESTION to remember an answer for: \n" << std::endl;
         std::getline(std::cin, question);
 
@@ -402,7 +407,7 @@ void Rememberer::addKnowledge(const std::string& filename)
 
         if (a_is_in_b("nevermind", sanitized_question) || sanitized_question == "0") {
           std::cout << "\n  * Navigating back to the Main Menu *" << std::endl;
-          std::cout << "    No new information has been saved  \n" << std::endl;
+          std::cout << "    NO new information has been saved  \n" << std::endl;
           return;
         }
 
