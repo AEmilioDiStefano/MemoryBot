@@ -61,10 +61,22 @@ private:
   std::vector<std::string> brain_vector;
   std::string first_name; 
   std::string first_name_upper;
-  
-// Security Functions:
 
-  std::string sanitize(const std::string& input);
+  std::string prepareForFile(const std::string& input);
+  
+  // Security Functions:
+  
+  int getSafeIntInput();
+  
+  std::string getSafeStringInput(size_t max_length);
+
+  std::string stringSanitization(const std::string& input);
+
+  bool cinIntTypeValidation(int &outInt);
+
+  std::string cinStringSizeValidation(size_t max_len);
+
+  bool cinIntSizeValidation(int value);
 
 };
 

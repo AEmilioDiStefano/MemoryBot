@@ -46,8 +46,7 @@ void Rememberer::conversation()
     std::cout << "\n    0. Exit" << std::endl; 
     std::cout << "\n  Please enter 1, 2, 3, or 0 to make your selection.  \n" << std::endl;
 
-    std::cin >> user_activity_choice;
-    std::cin.ignore();
+    user_activity_choice = getSafeIntInput();
 
     switch (user_activity_choice) 
     {
@@ -158,28 +157,26 @@ void Rememberer::talkToDeadPeople()
 
     std::cout << "\n -----------------------------------------" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
-    std::cout << "                 ______     " << std::endl;
-    std::cout << "               -        -   " << std::endl;
-    std::cout << "             /              " << std::endl;
-    std::cout << "            |              |" << std::endl;
-    std::cout << "            |,  .-.  .-.  ,|" << std::endl;
-    std::cout << "            | )(__/   __)( |" << std::endl;
-    std::cout << "            |/     /       |" << std::endl;
-    std::cout << "            (_     ^^     _)" << std::endl;
-    std::cout << "              __|IIIIII|__/ " << std::endl;
-    std::cout << "              |  IIIIII/ |  " << std::endl;
-    std::cout << "                         /  " << std::endl;
-    std::cout << "               `--------`   " << std::endl;
-    std::cout << "\n    WHO WOULD YOU LIKE TO SPEAK WITH?\n" << std::endl;
+    std::cout << "                  ______               " << std::endl;
+    std::cout << "                -        -             " << std::endl;
+    std::cout << "              /                        " << std::endl;
+    std::cout << "             |              |          " << std::endl;
+    std::cout << "             |,  .-.  .-.  ,|          " << std::endl;
+    std::cout << "             | )(__/   __)( |          " << std::endl;
+    std::cout << "             |/     /       |          " << std::endl;
+    std::cout << "             (_     ^^     _)          " << std::endl;
+    std::cout << "               __|IIIIII|__/           " << std::endl;
+    std::cout << "               |  IIIIII/ |            " << std::endl;
+    std::cout << "                          /            " << std::endl;
+    std::cout << "                `--------`             \n" << std::endl;
+    std::cout << "     WHO WOULD YOU LIKE TO SPEAK WITH? \n" << std::endl;
     std::cout << "   ENTITY:         NAME:         DESCRIPTION:" << std::endl;
     std::cout << "    1483      Marcus Veturius    A soldier from ancient Rome" << std::endl;
     std::cout << "     535     Benjamin Franklin   A renissance man from early America" << std::endl;
-    std::cout << "     225           Grkb          A caveman from 85,000 BC" << std::endl;
-    std::cout << "\n  Zz(Enter 0 to go back to the Main Menu)\n\n" + user_nametag;
+    std::cout << "     225           Grkb          A caveman from 85,000 BC\n" << std::endl;
+    std::cout << "            (Enter 0 to go back)     \n\n" + user_nametag;
 
-    int user_entity_choice;
-    std::cin >> user_entity_choice;
-    std::cin.ignore();
+    int user_entity_choice = getSafeIntInput();
 
     switch (user_entity_choice) {
       
@@ -301,7 +298,7 @@ void Rememberer::talkToDeadPeople()
 
       default:
       {
-        std::cout << "Your input did not match any registered entities.  Please try again using only the entity number with no additional characters.\n" << std::endl;
+        std::cout << "\n  Your input did not match any of the listed entities.\n  Please try again using only the entity number with no additional characters.\n" << std::endl;
         break;
       }
     }  
@@ -373,17 +370,6 @@ void Rememberer::invertedIndexConversationLoop(
 
   index.saveToJson(memory_file_name);
 }
-                  
-/////  ____  ______ _____ _____ _   _ 
-///// |  _ \|  ____/ ____|_   _| \ | |
-///// | |_) | |__ | |  __  | | |  \| |
-///// |  _ <|  __|| | |_ | | | | . ` |
-///// | |_) | |___| |__| |_| |_| |\  |
-///// |____/|______\_____|_____|_| \_|
-/////                               
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Rememberer::addKnowledge(const std::string& filename)
 {
@@ -393,7 +379,7 @@ void Rememberer::addKnowledge(const std::string& filename)
 
   std::cout << "\n -----------------------------------------" << std::endl;
   std::cout << " -----------------------------------------" << std::endl;
-  std::cout << "\n  YOU ARE IN THE BAIN OF MEMORY BOT  \n" << std::endl;
+  std::cout << "\n  YOU ARE IN THE MIND OF MEMORY BOT  \n" << std::endl;
   std::cout << "  SAY 'nevermind' or enter '0' at any time \n  to stop editing WITHOUT making changes" << std::endl;
 
   do {
@@ -403,16 +389,17 @@ void Rememberer::addKnowledge(const std::string& filename)
         std::cout << "\n  Enter the QUESTION to remember an answer for: \n" << std::endl;
         std::getline(std::cin, question);
 
-        std::string sanitized_question = sanitize(question);
+        std::string prepared_question = prepareForFile(question);
 
-        if (a_is_in_b("nevermind", sanitized_question) || sanitized_question == "0") {
+        if (a_is_in_b("nevermind", prepared_question) || prepared_question == "0") 
+        {
           std::cout << "\n  * Navigating back to the Main Menu *" << std::endl;
           std::cout << "    NO new information has been saved  \n" << std::endl;
           return;
         }
 
         // This if statement avoids duplicate key values in our JSON file
-        if (j.contains(sanitized_question)) 
+        if (j.contains(prepared_question)) 
         {
             std::cout << "\n  That question ALREADY EXISTS. Please enter a new one.  \n" << std::endl;
         } 
@@ -428,7 +415,7 @@ void Rememberer::addKnowledge(const std::string& filename)
               return;
             }
 
-            j[sanitized_question] = answer;
+            j[prepared_question] = answer;
             break;
         }
       }
@@ -448,13 +435,14 @@ void Rememberer::addKnowledge(const std::string& filename)
   file << j.dump(4); // Pretty-printed JSON
   file.close();
 
-  std::cout << "\n  Updated question-answer pairs saved to " << filename  + "\n" << std::endl;
+  std::cout << "\n  Updated question-answer pairs have been saved to " << filename  + "\n" << std::endl;
 }
 
 /**
  * Loads existing JSON from file if it exists, or returns an empty JSON object.
  */
-json Rememberer::loadExistingJSON(const std::string& filename) {
+json Rememberer::loadExistingJSON(const std::string& filename) 
+{
     std::ifstream inFile(filename);
     if (!inFile) {
         return json{};
@@ -470,16 +458,6 @@ json Rememberer::loadExistingJSON(const std::string& filename) {
     return existing;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-///  ______ _   _ _____  
-/// |  ____| \ | |  __ \ 
-/// | |__  |  \| | |  | |
-/// |  __| | . ` | |  | |
-/// | |____| |\  | |__| |
-/// |______|_| \_|_____/ 
-//\\ 
 
 unsigned int Rememberer::randomIndex(std::vector<std::string> input_vector) 
 {
@@ -606,6 +584,19 @@ std::string Rememberer::lower(std::string& str)
   return str;
 }
 
+// This function prepares user input to be used as a key for 
+// key-value pairs which will be used in an inverted index
+std::string Rememberer::prepareForFile(const std::string& input) 
+{
+  std::string output;
+    for (char c : input) {
+        if (std::isalnum(static_cast<unsigned char>(c)) || std::isspace(static_cast<unsigned char>(c))) {
+            output += std::tolower(static_cast<unsigned char>(c));
+        }
+    }
+    return output;
+}
+
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
@@ -621,30 +612,108 @@ std::string Rememberer::lower(std::string& str)
 // |  __| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 // | |  | |_| | | | | (__| |_| | (_) | | | \__ \
 // |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
-//
 
-// This function sanitizes user input.
-std::string Rememberer::sanitize(const std::string& input) {
-  std::string output;
-    for (char c : input) {
-        if (std::isalnum(static_cast<unsigned char>(c)) || std::isspace(static_cast<unsigned char>(c))) {
-            output += std::tolower(static_cast<unsigned char>(c));
+/////  ____  ______ _____ _____ _   _ 
+///// |  _ \|  ____/ ____|_   _| \ | |
+///// | |_) | |__ | |  __  | | |  \| |
+///// |  _ <|  __|| | |_ | | | | . ` |
+///// | |_) | |___| |__| |_| |_| |\  |
+///// |____/|______\_____|_____|_| \_|
+/////                               
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+///  ______ _   _ _____  
+/// |  ____| \ | |  __ \ 
+/// | |__  |  \| | |  | |
+/// |  __| | . ` | |  | |
+/// | |____| |\  | |__| |
+/// |______|_| \_|_____/ 
+//\\ 
+
+int Rememberer::getSafeIntInput() {
+    int value;
+    while (true) {
+        if (!cinIntTypeValidation(value)) {
+            std::cout << "\n  Invalid input type. Please enter a valid integer.\n\n" + user_nametag;
+            continue;
+        }
+
+        if (!cinIntSizeValidation(value)) {
+            std::cout << "\n  Integer out of range. Must be between 0 and 300.\n\n" + user_nametag;
+            continue;
+        }
+
+        return value;
+    }
+}
+
+std::string Rememberer::getSafeStringInput(size_t max_length) {
+    std::string input;
+    while (true) {
+
+        input = cinStringSizeValidation(max_length);
+
+        input = stringSanitization(input);
+
+        if (input.empty()) {
+            std::cout << "Input was completely sanitized. Please try again.\n";
+            continue;
+        }
+
+        return input;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string Rememberer::stringSanitization(const std::string& input) {
+    std::string sanitized;
+    const std::string unsafe = "<>\"';&|\\/()`=*%";
+
+    for (char ch : input) {
+        if (unsafe.find(ch) == std::string::npos && std::isprint(static_cast<unsigned char>(ch))) {
+            sanitized += ch;
         }
     }
-    return output;
+
+    return sanitized;
 }
 
-// This function checks that the value being assigned to a variable 
-//is of the correct type.
-bool is_integer(const std::string& input) {
-    if (input.empty()) return false;
-    size_t start = (input[0] == '-' || input[0] == '+') ? 1 : 0;
-    return std::all_of(input.begin() + start, input.end(), ::isdigit);
+bool Rememberer::cinIntTypeValidation(int &outInt) {
+    std::string line;
+    std::getline(std::cin, line);
+    std::stringstream ss(line);
+    if (ss >> outInt && ss.eof()) {
+        return true;
+    }
+    return false;
 }
 
-bool is_float(const std::string& input) {
-    std::istringstream iss(input);
-    float f;
-    return (iss >> f) && (iss.eof());
+std::string Rememberer::cinStringSizeValidation(size_t max_len) {
+    std::string input;
+    char ch;
+
+    while (std::cin.get(ch) && ch != '\n') {
+        if (input.size() < max_len) {
+            input += ch;
+        }
+    }
+
+    // Get rid of all characters beyond the set point (mad length)
+    if (ch != '\n') {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    return input;
 }
 
+// This is where we ultimately set the maximum number of characters
+// for user input strings.
+bool Rememberer::cinIntSizeValidation(int value) {
+    return value >= 0 && value <= 300;
+}
