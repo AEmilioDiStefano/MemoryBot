@@ -182,6 +182,7 @@ void Rememberer::talkToDeadPeople()
       
       case 1483:
       {
+        entity_full_name = "Marcus Veturius";
         entity_nametag = "  MARCUS: ";
         memory_file_name = "people/roman_soldier.json";
 
@@ -220,16 +221,16 @@ void Rememberer::talkToDeadPeople()
       
       case 225:
       {
+        entity_full_name = "Grkb";
         entity_nametag = "  GRKB: ";
         memory_file_name = "people/grkb.json";
 
         greeting_strings = {
           "I am strong Grkb.  Grkb land from green mountain to wide river.", 
           "Grkb is strong.", 
-          "Tell old woman from red mountain cave to give back spear.  If not I find her.", 
+          "Tell old woman from red mountain cave to give back rope.", 
           "Grkb is happy, found woman from red mountain cave.  Grkb is tired.", 
           "Grkb is hunter of elk, killer of bear.  Grkb wear wolf pelt on shoulder. ", 
-          "Take Grkb to the women from green mountains.  Grkb can not find them, Grkb is lost.", 
           "Grkb is busy - found eggs.  Ask question quickly."
         };
 
@@ -258,6 +259,7 @@ void Rememberer::talkToDeadPeople()
 
       case 535:
       {
+        entity_full_name = "Benjamin Franklin";
         entity_nametag = "  BENJAMIN: ";
         memory_file_name = "people/benjamin_franklin.json";
 
@@ -302,6 +304,12 @@ void Rememberer::talkToDeadPeople()
         break;
       }
     }  
+
+    std::cout << "\n -----------------------------------------" << std::endl;
+    std::cout << " -----------------------------------------" << std::endl;
+    std::cout << "\n  **  " + entity_full_name + " has entered the room  **" << std::endl;
+    std::cout << "\n -----------------------------------------" << std::endl;
+    std::cout << " -----------------------------------------" << std::endl;
 
     unsigned int random_greeting_index = randomIndex(greeting_strings);
     std::cout << "\n" + entity_nametag + greeting_strings[random_greeting_index] + "\n\n" + user_nametag;
@@ -644,7 +652,7 @@ int Rememberer::getSafeIntInput() {
         }
 
         if (!cinIntSizeValidation(value)) {
-            std::cout << "\n  Integer out of range. Must be between 0 and 300.\n\n" + user_nametag;
+            std::cout << "\n  Integer out of range. Must be between 0 and 10,000.\n\n" + user_nametag;
             continue;
         }
 
@@ -715,5 +723,5 @@ std::string Rememberer::cinStringSizeValidation(size_t max_len) {
 // This is where we ultimately set the maximum number of characters
 // for user input strings.
 bool Rememberer::cinIntSizeValidation(int value) {
-    return value >= 0 && value <= 300;
+    return value >= 0 && value <= 10000;
 }

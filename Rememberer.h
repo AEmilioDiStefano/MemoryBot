@@ -50,6 +50,7 @@ public:
   json loadExistingJSON(const std::string& filename);
   
   std::string entity_nametag;
+  std::string entity_full_name;
   std::string user_nametag;
   std::string memory_file_name;
   std::vector<std::string> greeting_strings;
