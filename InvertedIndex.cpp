@@ -114,6 +114,27 @@ void InvertedIndex::addEntry(const std::string& question, const std::string& ans
     }
 }
 
+void InvertedIndex::removeQuestionFromIndex(const std::string& question) 
+{
+    // For each word (token) in each entry, 
+    for (const auto& word : tokenize(question)) 
+    {
+        // search for a word in common with the question and the answer (*)
+        if (invertedIndex[word].count(question)) 
+        {
+            // if one is not found, then get rid of the question. (*)
+            invertedIndex[word].erase(question);
+
+            // If there is no instance of the word in the invrerted index,
+            if (invertedIndex[word].empty()) 
+            {
+                // then get rid of the word. (*)
+                invertedIndex.erase(word);
+            }
+        }
+    }
+}
+
 /*
  * This function removes a question-answer (key-value) pair to our inverted index.
  */

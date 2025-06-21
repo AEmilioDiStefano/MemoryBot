@@ -359,7 +359,7 @@ void Rememberer::talkToDeadPeople()
     std::cout << "\n  **  " + entity_full_name + " is present.  **" << std::endl;
     std::cout << "\n  To prevent unintended disturbances,  " << std::endl;
     std::cout << "  avoid mirrors and reflective surfaces    " << std::endl;
-    std::cout << "  until this conversation has ended.                  " << std::endl;
+    std::cout << "  until the conversation has ended.                  " << std::endl;
     std::cout << "\n -----------------------------------------" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
 
@@ -684,7 +684,7 @@ std::string Rememberer::getSafeStringInput(size_t max_length) {
  */
 std::string Rememberer::stringSanitization(const std::string& input) {
   std::string sanitized;
-  const std::string unsafe = "<>\"';&$@#-_+,.?|\\/()`=*%^";
+  const std::string unsafe = "<>\"';&$@#-_+,|\\/()`=*%^";
 
   for (char ch : input) {
       if (unsafe.find(ch) == std::string::npos && std::isprint(static_cast<unsigned char>(ch))) {
