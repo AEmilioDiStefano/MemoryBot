@@ -14,24 +14,37 @@
 #include "Rememberer.h"
 #include "InvertedIndex.h"
 
-// This function breaks the ice between MemoryBot and the user.  
-// The values for the user_name and user_name_upper are 
-// extracted from user input.
+/*
+ * This function breaks the ice between MemoryBot and the user.  
+ * The values for the user_name and user_name_upper are 
+ * extracted from user input.
+ */
 void Rememberer::introduction() 
 {
   // This variable stores the raw data input from the user after they are 
   // prompted for their name.
   std::string user_name;
   std::cout << "\n\n  Please enter your name: \n" << std::endl;
-  std::getline(std::cin, user_name);
+
+  // This is a dedicated function which validates and sanitizes 
+  // strings from user input. 
+  user_name = getSafeStringInput(30);
   
+  // Take the user's name, extract the first word (the first name), 
+  // and assemble a user nametag.
   std::vector<std::string> name_vector = split(user_name);
   Rememberer::first_name = name_vector[0];
   user_nametag = upper(first_name) + ": ";
 }
 
+/*
+ * This function assembles other modular functions from this class to 
+ * create a conversation loop which achieves our desired functionality.
+ */
 void Rememberer::conversation() 
 {
+
+  // 
   unsigned int user_activity_choice;
   while(true) 
   {
@@ -176,7 +189,7 @@ void Rememberer::talkToDeadPeople()
     std::cout << "     225           Grkb          A caveman from 85,000 BC\n" << std::endl;
     std::cout << "            (Enter 0 to go back)     \n\n" + user_nametag;
 
-    int user_entity_choice = getSafeIntInput();
+    unsigned int user_entity_choice = getSafeIntInput();
 
     switch (user_entity_choice) {
       
@@ -307,7 +320,10 @@ void Rememberer::talkToDeadPeople()
 
     std::cout << "\n -----------------------------------------" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
-    std::cout << "\n  **  " + entity_full_name + " has entered the room  **" << std::endl;
+    std::cout << "\n  **  " + entity_full_name + " is present.  **" << std::endl;
+    std::cout << "\n  To prevent unintended disturbances,  " << std::endl;
+    std::cout << "  avoid mirrors and reflective surfaces    " << std::endl;
+    std::cout << "  until this conversation has ended.                  " << std::endl;
     std::cout << "\n -----------------------------------------" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
 
@@ -344,7 +360,7 @@ void Rememberer::invertedIndexConversationLoop(
 
   while (true) {
 
-    std::getline(std::cin, current_question);
+    current_question = getSafeStringInput(2000);
     
     // If the word "goodbye" is in user input,
     if (a_is_in_b("goodbye", current_question) == true) 
@@ -395,7 +411,7 @@ void Rememberer::addKnowledge(const std::string& filename)
       while (true) {
         
         std::cout << "\n  Enter the QUESTION to remember an answer for: \n" << std::endl;
-        std::getline(std::cin, question);
+        question = getSafeStringInput(500);
 
         std::string prepared_question = prepareForFile(question);
 
@@ -415,7 +431,7 @@ void Rememberer::addKnowledge(const std::string& filename)
         {
             // Valid new question, now ask for the answer
             std::cout << "\n  Now enter the ANSWER to remember for that question:  \n" << std::endl;
-            std::getline(std::cin, answer);
+            answer = getSafeStringInput(500);
 
             if (a_is_in_b("nevermind", answer) || answer == "0") {
               std::cout << "\n  * Navigating back to the Main Menu *  \n" << std::endl;
@@ -428,8 +444,12 @@ void Rememberer::addKnowledge(const std::string& filename)
         }
       }
 
+      std::cout << "\n  The following question-answer pair will be stored to MemoryBot's brain file: \n" << std::endl;
+      std::cout << "  QUESTION: " + question << std::endl;
+      std::cout << "    ANSWER: " + answer << std::endl;
+      
       std::cout << "\n  ADD ANOTHER question-answer pair? (yes/no): \n" << std::endl;
-      std::getline(std::cin, choice);
+      choice = getSafeStringInput(500);
 
   } while (choice == "yes" || choice == "Yes" || choice == "YES");
 
@@ -677,11 +697,9 @@ std::string Rememberer::getSafeStringInput(size_t max_length) {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 std::string Rememberer::stringSanitization(const std::string& input) {
     std::string sanitized;
-    const std::string unsafe = "<>\"';&|\\/()`=*%";
+    const std::string unsafe = "<>\"';&$@#-_+,.?|\\/()`=*%^";
 
     for (char ch : input) {
         if (unsafe.find(ch) == std::string::npos && std::isprint(static_cast<unsigned char>(ch))) {

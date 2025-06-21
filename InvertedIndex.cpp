@@ -7,12 +7,13 @@
 #include "InvertedIndex.h"
 #include "Rememberer.h"
 
+// This library helps us to perform CRUD operations on our JSON files.
 using json = nlohmann::json;
 
 // This function breaks each string down into individual words (or tokens).
 std::vector<std::string> InvertedIndex::tokenize(const std::string& text) 
 {
-    // This instream object will process usr input strings.
+    // This instream object will process user input strings.
     std::istringstream stream(text);
     std::string word;
     // This vector will hold each word (or token) at its own index. 
