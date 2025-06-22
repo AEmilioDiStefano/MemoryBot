@@ -151,7 +151,8 @@ void InvertedIndex::removeEntry(const std::string& question) {
  * which makes this system so efficient at searching large data sets of 
  * question-answer pairs for the best possible match.
  */
-int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b) {
+int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std::vector<std::string>& b) 
+{
     // Shared tokens within user input strings and saved answer keys are 
     // kept track of via a two-dimensional grid made from two vectors.   
     int i = 0, j = 0, count = 0;
@@ -172,14 +173,15 @@ int InvertedIndex::linearMergeCount(const std::vector<std::string>& a, const std
                 ++j;
             }
         }
-        return count;
-    }
+    return count;
+}
 
 /*
  * This is the function that searches our inverted index for the question string 
  * which has most tokens (words) in common with the user input question.
  */
-std::string InvertedIndex::findBestMatch(const std::string& input_question, std::string not_found_string) {
+std::string InvertedIndex::findBestMatch(const std::string& input_question, std::string not_found_string) 
+{
     Rememberer rememberer;
 
     // Tokenize the input question into a vector of token (word) elements.
