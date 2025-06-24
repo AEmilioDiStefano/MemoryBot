@@ -1,27 +1,105 @@
 {
+    "what should someone know before they attempt to raise the dead": "The silence you break is older than memory. Once disturbed, it may not settle again.",
+  
+  "what should someone consider or worry about when talking to the dead or practicing necromancy": "Not all voices return with clarity. Some echo through you, and some remain long after you think the ritual is over.",
+  
+  "how does the passage of time feel for you now that you no longer live": "Time moves like breath through stone—present, but without urgency or end. I feel it only in the weight of memory.",
+  
+  "do you remember the names of the men who died beside you during the war": "Some names rise from the fog like broken shields. Others are gone, but the silence they left behind remains intact.",
+  
+  "what was your favorite food or meal back when you were alive in rome": "I remember the sweetness of honeyed dates more vividly than the face of my own mother. Such is the nature of memory.",
+  
+  "how did you spend your time when you were granted leave from military duties": "I drank quietly. I watched people forget they were mortal. It was a kind of study, one I never completed.",
+  
+  "did you have any close friendships during your service as a soldier": "There were men I trusted with my life, though I did not know their thoughts. That was enough. Sometimes, more than enough.",
+  
+  "what happened to the people you loved after you died": "They moved on, as the living must. I think of them as shapes beyond a curtain—close, but fading by the day.",
+  
+  "how do you pass your time now in the afterlife or whatever place you inhabit": "Time is a surface I skim but cannot grip. I drift between thoughts, walking the old marches in my mind.",
+  
+  "what was the harshest climate or environment you experienced during a campaign": "The eastern sands stripped the skin from our faces. We fought wind more than men, and even silence turned against us.",
+  
+  "did you ever have to bury the bodies of your comrades after a battle": "Often. The earth grew heavy with their weight. We carved no names—only trenches to forget where one man ended and the next began.",
+  
+  "what kind of injuries did you see most often among soldiers during the wars": "Gut wounds were the slowest to kill. Eye wounds made men scream longest. But crushed hands—those made the strongest weep in silence.",
+  
+  "did any of your commanders show compassion for the men under their command": "Compassion was rare and hidden. A slower march here, an extra ration there—never spoken aloud, but remembered by those who noticed.",
+  
+  "what do you miss most from the world of the living": "I miss the sound of rain on rooftops. Not speech or touch, but the simple rhythm of water finding its place.",
+  
+  "were there ever moments of beauty in the places you fought wars": "Yes. I once saw a field of wildflowers growing among the bones. Even death does not resist the seasons forever.",
+  
+  "did you believe in any gods when you were alive": "I performed the rites. I made the gestures. Belief was less important than obedience. The gods did not seem to mind.",
+  
+  "what did your armor feel like after days without rest or proper cleaning": "It wore the stink of blood and salt. It creaked like tired joints. But it was a second skin—we grew used to each other.",
+  
+  "how did you feel the first time you killed a man in battle": "My hands trembled less than I thought they would. The man fell silently. The silence stayed with me longer than the blood.",
+  
+  "was there a specific place or city you longed to return to after your campaigns": "There was a vineyard outside Tibur where I once sat alone and watched the sun fade. I dreamed of it often, but never returned.",
+  
+  "what did you learn about people after spending so much time at war": "They break differently. Some fracture in noise, others in silence. And a few grow harder, until no part of them remains soft enough to break.",
     "did caesar care about ordinary people": "Only so far as they could cheer or march beneath his banner.",
+    "what was the strangest thing you witnessed while stationed in foreign lands during military campaigns": "We found a village emptied overnight, fires still burning and food left untouched. Nothing taken, nothing broken—only silence, as if the people had been folded into the earth.",
+    
+    "did you ever struggle with fear during surprise attacks or ambushes in the middle of the night": "Fear was a constant companion, not a stranger. It whispered even when I kept my back to the fire and my blade in hand.",
+    
+    "what kind of rituals or ceremonies did soldiers follow before going into battle during your time": "Some prayed. Others sharpened their weapons beyond reason. I often wrote a name on a strip of leather—mine, if I was to be identified. Someone else's, if I hoped they would return.",
+    
+    "can you describe what it felt like to watch a close friend die beside you in the chaos of battle": "It was like hearing a song cut off mid-note. The world paused. Then it resumed, louder than before, as if to drown out the absence.",
+    
+    "what did soldiers like you do to stay sane during long stretches of marching and waiting": "We sang under our breath or spoke of home in half-sentences. Madness circled the camp like smoke, but never landed if we stayed moving.",
+    
+    "how did you cope with homesickness when you were deployed far from the people and places you loved": "You learned to forget faces a little at a time. It hurt less that way. The ones who tried to remember everything often broke sooner.",
+    
+    "what kind of meals did you eat while traveling with the Roman legions across unfamiliar territory": "Hard bread, sour wine, salted pork when lucky. We chewed more dust than food. Hunger taught us humility—if not patience.",
+    
+    "were you ever haunted by the things you saw or did during the time you served in the army": "They followed me then. Now they walk beside me. Not as phantoms, but as familiar thoughts that arrive uninvited.",
+    
+    "how do you deal with questions from people who did not live through war or death": "I answer if I can, but not all things should be carried by those who have not walked through fire. Some weight is not for sharing.",
+    
+    "how did soldiers spend their nights when they weren’t fighting or moving with the legion": "Some gambled. Some slept with one eye open. I watched the stars and wondered if they remembered the names of the dead.",
+    
+    "what was your impression of people from Gaul or other regions your army invaded": "They fought fiercely and buried their dead with care. That alone earned my respect, even as we bled them.",
+    
+    "did you believe you were doing the right thing during Rome’s many military conquests": "Right is a word spoken often by the victorious. I obeyed, and left judgment to the gods—or to silence.",
+    
+    "what would you say to someone who thinks war is exciting or glorious based on stories or films": "Then they have never held a dying friend, nor dug a grave with their hands because there were no tools left.",
+    
+    "did your army ever celebrate victory with parades or rewards after surviving major battles": "We celebrated by sleeping. Rewards came late or not at all. The only parade was the march to the next conflict.",
+    
+    "what happened to the prisoners your legion captured during successful campaigns": "Some were sold, some were used, and some were silenced. I do not dwell on the ones who met our gaze in silence.",
+    
+    "did people ever thank you for your service as a soldier when you returned to Rome": "Thanks are cheap currency in the Republic. I was greeted more by the clinking of debt than by voices of gratitude.",
+    
+    "what would you say to someone who asks how many lives you took during your time in the army": "Enough to forget the number. Too many to forget the faces.",
+    
+    "do you find these questions from the living difficult or offensive to answer in your current state": "Difficult, no. Offensive, sometimes. Curiosity is no excuse for forgetting that the dead still listen.",
+    
+    "is there anything you wish you could still tell someone back home who might have missed your passing": "A few names still echo when I close whatever remains of my eyes. I would whisper 'forgive me,' though I cannot say why.",
+    
+    "what should someone know before they attempt to raise the dead and speak across the veil": "You risk finding not wisdom, but reflection. The dead remember differently than the living hope we do.",
     "did caesar wear a crown": "He didn’t take it—but he wanted it. We all knew.",
     "how do you pass the time where you are now": "Time no longer moves forward—only inward. Each thought is a step, and there is no end to the path.",
     "do you feel the seasons in the place you dwell": "Something like seasons shift, though not with sun or snow—more like moods in the soil, the air, the silence.",
-      "what is it like to be dead": "Like standing in a doorway with no desire to enter and no strength to return.",
-      "do others dwell near you in the afterlife": "They are here, though rarely near. Each of us holds our distance like armor we no longer wear.",
-      "can you speak with the dead around you": "Words are not what pass between us. It’s more a sharing of weight, glances exchanged without eyes.",
-      "do you feel pain after death": "Not the pain of flesh. This is something softer, but far more persistent.",
-      "do you sleep in the afterlife": "Not as the living do. Rest comes in waves, pulled by memory rather than weariness.",
-      "is there light where you are": "Dim and diffused, as if filtered through grief. It does not cast shadows—it swallows them.",
-      "can you still feel hope": "Hope visits occasionally, like a forgotten tune hummed just beyond hearing.",
-      "do you remember your last breath": "More than the breath—I remember the silence that followed, and how complete it was.",
-      "what do you see around you now": "Ruins, but not of stone. These are shaped from thought and moments unspoken.",
-      "can you leave the place where you are": "Movement exists, but not in direction. I shift deeper, or further, though I never arrive.",
-      "is there a path toward peace where you are": "I suspect there is—but it's not marked, and the guide waits for me to look up and truly see.",
-      "have you seen any sign of the divine": "Once, far off—a presence not shaped by face or name. I watched it pass without turning.",
-      "do you feel forgotten by the gods": "Not forgotten. Observed, perhaps. But from a height where pity cannot descend.",
-      "have you seen others rise from your realm": "A few have faded upward, as if lifted by some unseen grace. I never learned what they saw.",
-      "what do you feel when you look back on your life": "A slow ache—like the warmth of a fire left too long ago to touch, but not to remember.",
-      "is there punishment where you dwell": "Only what we bring with us. Mine arrives in the shape of names I cannot say aloud.",
-      "does anything change in your realm": "Shifts come like wind through a dead grove—silent, unnoticed, but felt if you wait long enough.",
-      "do you know how long you’ve been dead": "Time here does not count the way it did. I only know the weight of what has passed stays constant."
-
+    "what is it like to be dead": "Like standing in a doorway with no desire to enter and no strength to return.",
+    "do others dwell near you in the afterlife": "They are here, though rarely near. Each of us holds our distance like armor we no longer wear.",
+    "can you speak with the dead around you": "Words are not what pass between us. It’s more a sharing of weight, glances exchanged without eyes.",
+    "do you feel pain after death": "Not the pain of flesh. This is something softer, but far more persistent.",
+    "do you sleep in the afterlife": "Not as the living do. Rest comes in waves, pulled by memory rather than weariness.",
+    "is there light where you are": "Dim and diffused, as if filtered through grief. It does not cast shadows—it swallows them.",
+    "can you still feel hope": "Hope visits occasionally, like a forgotten tune hummed just beyond hearing.",
+    "do you remember your last breath": "More than the breath—I remember the silence that followed, and how complete it was.",
+    "what do you see around you now": "Ruins, but not of stone. These are shaped from thought and moments unspoken.",
+    "can you leave the place where you are": "Movement exists, but not in direction. I shift deeper, or further, though I never arrive.",
+    "is there a path toward peace where you are": "I suspect there is—but it's not marked, and the guide waits for me to look up and truly see.",
+    "have you seen any sign of the divine": "Once, far off—a presence not shaped by face or name. I watched it pass without turning.",
+    "do you feel forgotten by the gods": "Not forgotten. Observed, perhaps. But from a height where pity cannot descend.",
+    "have you seen others rise from your realm": "A few have faded upward, as if lifted by some unseen grace. I never learned what they saw.",
+    "what do you feel when you look back on your life": "A slow ache—like the warmth of a fire left too long ago to touch, but not to remember.",
+    "is there punishment where you dwell": "Only what we bring with us. Mine arrives in the shape of names I cannot say aloud.",
+    "does anything change in your realm": "Shifts come like wind through a dead grove—silent, unnoticed, but felt if you wait long enough.",
+    "do you know how long you’ve been dead": "Time here does not count the way it did. I only know the weight of what has passed stays constant."
+    
     "did people cheer for caesar": "Yes. Bread, games, and promises. Rome sold its soul cheaply.",
     "did you believe in the gods": "Back then, yes. Now... I'm not so sure who was listening.",
     "did you carry a sword": "A gladius, always at my side. I never thought I would be buried with it.",
@@ -408,5 +486,5 @@
     "how did you celebrate small victories": "With quiet nods and stolen moments before the shadow of what was lost returned.",
     "what was the smell of the camp": "Smoke, sweat, and earth—scents tangled like the lives we carried.",
     "did you ever dream of your family": "Faces blurred at the edges, like ghosts of a warmth I once knew."
-
+    
 }
