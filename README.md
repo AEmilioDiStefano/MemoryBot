@@ -18,5 +18,3 @@ then run:
 
 ./a.out main.cpp Rememberer.cpp InvertedIndex.cpp
 ```
-
-
