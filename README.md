@@ -9,7 +9,6 @@ Also, simulate necromancy with the “Talk to dead people” function. Have you 
 Run the propgram with the following commands:
 ```console
 g++ main.cpp Rememberer.cpp InvertedIndex.cpp
-foo
 ```
 then:
 
