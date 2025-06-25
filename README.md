@@ -7,14 +7,15 @@ The MemoryBot project is a system for seamless access to information regardless 
 Also, simulate necromancy with the “Talk to dead people” function. Have you ever wanted to interview Benjamin Franklin on life in early America?  How about asking an ancient Roman soldier abnout his experience on campaign in the time of Julius Cesar?  MemoryBot’s “Talk to dead people” function can make that happen. The system is designed for the easy addition of new entities. Just add a JSON file of question-answer (key-value) pairs and make some minor code adjustments to converse with the historical figure or fictional character of your choice. JSON files with question-answer (key-value) pairs can be made manually or generated from an AI service like ChatGTP. As more questions and answers are added to the JSON file, the entity’s dialogue will become more convincing.
 
 Run the propgram with the following commands:
-'''console
+```console
 g++ main.cpp Rememberer.cpp InvertedIndex.cpp
-'''
+foo
+```
 then:
-'''console
-'''console
+
+```console
+
 ./a.out main.cpp Rememberer.cpp InvertedIndex.cpp
-'''
-'''
+```
 
 
