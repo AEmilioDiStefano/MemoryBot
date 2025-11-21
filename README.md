@@ -1,6 +1,6 @@
 # MemoryBot
 
-This program is written in C++ and uses an inverted index data structure along with a linear merge count algorithm to find the best answers to questions asked by the user. The system uses a local JSON data store and does not require an internet connection to function. Large data sets can be stored locally for each agent in order to achieve a high level of precision in answering questions. The application is lightweight and can run on embedded systems. 
+This program is written in C++ and uses an inverted index data structure along with a linear merge count algorithm to find the best answers to questions asked by the user. The system uses a local JSON data store and does not require an internet connection to function. Large data sets can be stored locally for each agent in order to achieve a high level of precision in answering questions. The application is lightweight and can run on very limited systems. 
 
 The MemoryBot project is a system for seamless access to information regardless of internet accessibility. Tell MemoryBot anything from the melting point of potassium to the name of your fourth cousin Constancia’s fifth daughter, and MemoryBot will remember it for later. No more forgotten birthdays, no more awkwardly asking questions which you should already know the answer to, and no more depending on the internet for answers.
 
